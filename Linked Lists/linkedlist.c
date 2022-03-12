@@ -79,11 +79,12 @@ node * insert(node*idx, int new_element){
     // (creating sorted linkedlist)
     // this function will be insert elements by checking whether new element is higher or lower
     // imagine that we have 3 7 2 4 as elements to add to the empty list consequitively
-    // 3 will be added as root, root -> 3 -> NULL;
+    // 3 will be added as root, root -> 3 -> NULL
+    // 7 goes end to be settled, root -> 3 -> 7 -> NULL
     // when 2 is come, 2 will point 3
     // we break root's next pointer to change it 3 to 2 | root -> 2 -> 3 -> 7
     // when 4 is come, 4 will point 7
-    // we break 3's next pointer to change it to 7 to 4
+    // we break 3's next pointer to change it 7 to 4
     // so the latest linkedlist is root -> 2 -> 3 -> 4 -> 7
 
     if(idx == NULL){          // if linkedlist is empty

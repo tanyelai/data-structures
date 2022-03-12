@@ -9,9 +9,11 @@ struct n{
 };
 typedef struct n node;
 
-void print_list(node*);
-node * add_new_element(node *, int); // add to end
-node * add_or_insert_new_el(node *, int); // ascending sort
+// normal linked list which ends with the null
+void print_list(node*); 
+node * add_new_element(node *, int); // add to end without sorting
+node * insert_new_el(node *, int); // ascending sort
+node * delete_el(node *, int);   // delete an element from linked list
 
 int main(){
     node * root; // point head of list
@@ -21,11 +23,18 @@ int main(){
     // linked lists use sequential access
 
     int i, new_element;
+    root = delete_el(root, 1);
     for(i=0; i<10; i++){
         printf("enter new element: ");
         scanf("%d", &new_element);
-        root = add_or_insert_new_el(root, new_element);
+        root = insert_new_el(root, new_element);
     }
+    print_list(root);
+
+    root = delete_el(root, 40);
+    root = delete_el(root, 1);
+    root = delete_el(root, 999);
+    root = delete_el(root, 500);
 
     print_list(root);
 }
@@ -66,7 +75,7 @@ node * add_new_element(node*idx, int new_element){
     return idx;
 }
 
-node * add_or_insert_new_el(node*idx, int new_element){
+node * insert_new_el(node*idx, int new_element){
     // (creating sorted linkedlist)
     // this function will be insert elements by checking whether new element is higher or lower
     // imagine that we have 3 7 2 4 as elements to add to the empty list consequitively
@@ -109,5 +118,34 @@ node * add_or_insert_new_el(node*idx, int new_element){
             idx = add_new_element(idx, new_element);
             return idx;
         }
+    }
+}
+
+node * delete_el(node*idx, int element){
+
+    if(idx == NULL){
+        printf("There is no element to remove. List has 0 element.\n");
+        return idx;
+    }
+    else if(idx -> x == element){ // If the root equals to element we search (in other words first element of the list)
+        node * tmp = idx;
+        idx = idx -> next;
+        free(tmp);
+        return idx;      
+    }
+    else{
+        node * iter = idx;
+        while(iter -> next != NULL && iter -> next -> x != element)
+            iter = iter -> next;
+
+        if(iter -> next == NULL){
+            printf("There is no such element in the list.\n");
+            return idx;
+        }
+
+        node * tmp = iter -> next;
+        iter -> next = iter -> next -> next;
+        free(tmp);
+        return idx;
     }
 }

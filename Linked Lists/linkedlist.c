@@ -11,15 +11,16 @@ typedef struct n node;
 
 // normal linked list which ends with the null
 void print(node*); // display the list elements
-node * add(node *, int); // adding to end without sorting
+node * add(node *, int); // adding to the end without sorting
 node * insert(node *, int); // adding with ascending sort
 node * delete(node *, int);   // deleting an element from linked list
 
+
 int main(){
-    node * root; // point head of list
+    node * root; // pointer for holding the head of list
     root = NULL;
 
-    // node*idx will be used to point root as index of root
+    // node*idx will be used to point root, can be considered as [index] of root
     // linked lists use sequential access
 
     int i, new_element;
@@ -41,7 +42,7 @@ int main(){
 
 void print(node*idx){
     int i = 0;
-    while(idx != NULL){ // we will travel until we reach the NULL pointer at the end
+    while(idx != NULL){ // we will travel until we reach the NULL at the end
         i++;
         printf("%d. element: %d\n", i, idx -> x);
         idx = idx -> next;
@@ -49,7 +50,7 @@ void print(node*idx){
 }
 
 
-// we reach the NULL then we add new element *at the end*
+// after we reach the NULL, we add the new element *at the end*
 node * add(node*idx, int new_element){
 
     if (idx == NULL){
@@ -60,7 +61,7 @@ node * add(node*idx, int new_element){
     }
 
     // we can consider iter as i in loops
-    // (use to travel to the end without changing main pointer)
+    // (we will travel on the list through iter without changing head pointer)
     node * iter = idx; 
     while(iter -> next != NULL){
         iter = iter -> next;
@@ -97,8 +98,8 @@ node * insert(node*idx, int new_element){
         while(iter -> next != NULL && new_element >= iter -> next -> x)
             iter = iter -> next;
     
-        // we need temporary box to not lose linkedlist at the space while changing pointers
-        // we have to point the linkedlist if we break it without adding new point, we cannot reach that list again
+        // we need temporary box to not lose linked list at the space while changing pointers
+        // we have to point the linked list if we break it without adding new point, we cannot reach that list again
         node * temp = (node*) malloc(sizeof(node));
 
         if (idx -> x > new_element){        // add element as root
@@ -126,7 +127,7 @@ node * delete(node*idx, int element){
         printf("There is no element to remove. List has 0 element.\n");
         return idx;
     }
-    else if(idx -> x == element){ // If the root equals to element we search (in other words first element of the list)
+    else if(idx -> x == element){ // if the root equals to element we search (in other words first element of the list)
         node * tmp = idx;
         idx = idx -> next;
         free(tmp);

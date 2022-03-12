@@ -39,8 +39,7 @@ int main(){
     print_list(root);
 }
 
-void print_list(node*idx){ // send the pointer
-                           // of where you want to start travel
+void print_list(node*idx){
     int i = 0;
     while(idx != NULL){ // we will travel until we reach the NULL pointer at the end
         i++;

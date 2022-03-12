@@ -10,10 +10,10 @@ struct n{
 typedef struct n node;
 
 // normal linked list which ends with the null
-void print_list(node*); 
-node * add_new_element(node *, int); // add to end without sorting
-node * insert_new_el(node *, int); // ascending sort
-node * delete_el(node *, int);   // delete an element from linked list
+void print(node*); // display the list elements
+node * add(node *, int); // adding to end without sorting
+node * insert(node *, int); // adding with ascending sort
+node * delete(node *, int);   // deleting an element from linked list
 
 int main(){
     node * root; // point head of list
@@ -23,23 +23,23 @@ int main(){
     // linked lists use sequential access
 
     int i, new_element;
-    root = delete_el(root, 1);
+    root = delete(root, 1);
     for(i=0; i<10; i++){
         printf("enter new element: ");
         scanf("%d", &new_element);
-        root = insert_new_el(root, new_element);
+        root = insert(root, new_element);
     }
-    print_list(root);
+    print(root);
 
-    root = delete_el(root, 40);
-    root = delete_el(root, 1);
-    root = delete_el(root, 999);
-    root = delete_el(root, 500);
+    root = delete(root, 40);
+    root = delete(root, 1);
+    root = delete(root, 999);
+    root = delete(root, 500);
 
-    print_list(root);
+    print(root);
 }
 
-void print_list(node*idx){
+void print(node*idx){
     int i = 0;
     while(idx != NULL){ // we will travel until we reach the NULL pointer at the end
         i++;
@@ -50,7 +50,7 @@ void print_list(node*idx){
 
 
 // we reach the NULL then we add new element *at the end*
-node * add_new_element(node*idx, int new_element){
+node * add(node*idx, int new_element){
 
     if (idx == NULL){
         idx = (node*) malloc(sizeof(node));
@@ -74,7 +74,7 @@ node * add_new_element(node*idx, int new_element){
     return idx;
 }
 
-node * insert_new_el(node*idx, int new_element){
+node * insert(node*idx, int new_element){
     // (creating sorted linkedlist)
     // this function will be insert elements by checking whether new element is higher or lower
     // imagine that we have 3 7 2 4 as elements to add to the empty list consequitively
@@ -114,13 +114,13 @@ node * insert_new_el(node*idx, int new_element){
         }
         else{ // end of list
             // we have already written code to add element to the end so why we won't use it?
-            idx = add_new_element(idx, new_element);
+            idx = add(idx, new_element);
             return idx;
         }
     }
 }
 
-node * delete_el(node*idx, int element){
+node * delete(node*idx, int element){
 
     if(idx == NULL){
         printf("There is no element to remove. List has 0 element.\n");

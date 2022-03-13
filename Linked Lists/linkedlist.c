@@ -10,7 +10,7 @@ struct n{
 typedef struct n node;
 
 // normal linked list which ends with the null
-void print(node*); // display the list elements
+void print(node *); // display the list elements
 node * add(node *, int); // adding to the end without sorting
 node * insert(node *, int); // adding with ascending sort
 node * delete(node *, int);   // deleting an element from linked list
@@ -106,7 +106,7 @@ node * insert(node*idx, int new_element){
             temp -> x = new_element;
             return temp; // send temp as new root, it is important to update root's pointer in main
         }
-        else if(iter -> next != NULL && new_element <= iter -> next -> x){     // instertion
+        else if(iter -> next != NULL && iter -> next -> x >= new_element){     // instertion
             temp -> next = iter -> next;
             temp -> x = new_element;
             iter -> next = temp;

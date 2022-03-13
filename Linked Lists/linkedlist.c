@@ -25,17 +25,17 @@ int main(){
 
     int i, new_element;
     root = delete(root, 1);
-    for(i=0; i<10; i++){
+    for(i=0; i<4; i++){
         printf("enter new element: ");
         scanf("%d", &new_element);
         root = insert(root, new_element);
     }
     print(root);
 
-    root = delete(root, 40);
-    root = delete(root, 1);
-    root = delete(root, 999);
-    root = delete(root, 500);
+    root = delete(root, 3);
+    root = delete(root, 7);
+    root = delete(root, 2);
+    root = delete(root, 5);
 
     print(root);
 }
@@ -88,9 +88,7 @@ node * insert(node*idx, int new_element){
     // so the latest linkedlist is root -> 2 -> 3 -> 4 -> 7
 
     if(idx == NULL){          // if linkedlist is empty
-        idx = (node*) malloc(sizeof(node));
-        idx -> x = new_element;
-        idx -> next = NULL;
+        idx = add(idx, new_element);
         return idx;
     }
 

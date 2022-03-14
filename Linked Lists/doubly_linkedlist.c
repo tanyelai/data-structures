@@ -21,7 +21,7 @@ int main(){
     node * root; // pointer for holding the head of list
     root = NULL;
 
-    // node*idx will be used to point root, can be considered as [index] of root
+    // node*head will be used to point root
     // linked lists use sequential access
 
     int i, new_element;
@@ -43,29 +43,29 @@ int main(){
     print(root);
 }
 
-void print(node*idx){
+void print(node*head){
     int i = 0;
-    while(idx != NULL){ // we will travel until we reach the NULL at the end
+    while(head != NULL){ // we will travel until we reach the NULL at the end
         i++;
-        printf("%d. element: %d\n", i, idx -> x);
-        idx = idx -> next;
+        printf("%d. element: %d\n", i, head -> x);
+        head = head -> next;
     }
     if(i == 0)
         printf("0 element left.");
 }
 
 
-node * add(node*idx, int new_element){ // add new element to the end of the list
+node * add(node*head, int new_element){ // add new element to the end of the list
 
-    if (idx == NULL){
-        idx = (node*) malloc(sizeof(node));
-        idx -> x = new_element;
-        idx -> prev = NULL;
-        idx -> next = NULL;
-        return idx;
+    if (head == NULL){
+        head = (node*) malloc(sizeof(node));
+        head -> x = new_element;
+        head -> prev = NULL;
+        head -> next = NULL;
+        return head;
     }
 
-    node * iter = idx; 
+    node * iter = head; 
     while(iter -> next != NULL){
         iter = iter -> next;
     }
@@ -75,28 +75,28 @@ node * add(node*idx, int new_element){ // add new element to the end of the list
     tmp -> prev = iter;
     iter -> next = tmp;
     tmp -> x = new_element;
-    return idx;
+    return head;
 }
 
-node * insert(node*idx, int new_element){
+node * insert(node*head, int new_element){
 
-    if(idx == NULL){          // if linked list is empty
-        idx = add(idx, new_element);
-        return idx;
+    if(head == NULL){          // if linked list is empty
+        head = add(head, new_element);
+        return head;
     }
 
     else{
         node * temp = (node*) malloc(sizeof(node));
 
-        if (idx -> x >= new_element){        // add element as root
-            temp -> next = idx;
+        if (head -> x >= new_element){        // add element as root
+            temp -> next = head;
             temp -> prev = NULL;
             temp -> x = new_element;
-            idx -> prev = temp;
+            head -> prev = temp;
             return temp; // send temp as new root, it is important to update root's pointer in main
         }
 
-        node * iter = idx;
+        node * iter = head;
         while(iter -> next != NULL && iter -> next -> x < new_element)
             iter = iter -> next;
 
@@ -106,38 +106,38 @@ node * insert(node*idx, int new_element){
         iter -> next = temp;
         if(iter -> next != NULL)
             iter -> next -> prev = temp;
-        return idx;
+        return head;
     }
 }
 
-node * delete(node*idx, int element){
+node * delete(node*head, int element){
 
-    if(idx == NULL){
+    if(head == NULL){
         printf("There is no element to remove. List has 0 element.\n");
-        return idx;
+        return head;
     }
-    else if(idx -> next == NULL && idx -> x == element){
+    else if(head -> next == NULL && head -> x == element){
         printf("Your last element has removed. From now, you have 0 element in the list.\n");
-        node * tmp = idx;
-        idx = NULL; // 0 element has remained.
+        node * tmp = head;
+        head = NULL; // 0 element has remained.
         free(tmp);
-        return idx; 
+        return head; 
     }
-    else if(idx -> x == element){ // if the root equals to element we search (in other words first element of the list)
-        node * tmp = idx;
-        idx = idx -> next;
-        idx -> prev = NULL;
+    else if(head -> x == element){ // if the root equals to element we search (in other words first element of the list)
+        node * tmp = head;
+        head = head -> next;
+        head -> prev = NULL;
         free(tmp);
-        return idx;      
+        return head;      
     }
     else{
-        node * iter = idx;
+        node * iter = head;
         while(iter -> next != NULL && iter -> next -> x != element)
             iter = iter -> next;
 
         if(iter -> next == NULL){
             printf("There is no element matched with '%d' in the list.\n", element);
-            return idx;
+            return head;
         }
 
         node * tmp = iter -> next;
@@ -145,6 +145,6 @@ node * delete(node*idx, int element){
         free(tmp);
         if(iter -> next != NULL)
             iter -> next -> prev = iter;
-        return idx;
+        return head;
     }
 }

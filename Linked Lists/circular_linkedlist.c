@@ -21,7 +21,7 @@ int main(){
     node * root; // pointer for holding the head of list
     root = NULL;
 
-    // node*idx will be used to point root, can be considered as [index] of root
+    // node*head will be used to point root
     // linked lists use sequential access
 
     int i, new_element;
@@ -55,112 +55,112 @@ int main(){
     // ___________________________________________________________________________________
 }
 
-void print(node*idx){
+void print(node*head){
     int i = 0;
-    node * iter = idx;
+    node * iter = head;
 
-    if(idx == NULL)  // added extra code to solve segmentation fault which arise after deleting last element in the list
+    if(head == NULL)  // added extra code to solve segmentation fault which arise after deleting last element in the list
         printf("The list has no element to display.\n");
     else{   
         do{         // we want to root pointer as end point so we can understand we reach the end of the list.
             i++;
             printf("%d. element: %d\n", i, iter -> x);
             iter = iter -> next;
-        }while(iter != idx);
+        }while(iter != head);
     }
 }
 
 
-node * add(node*idx, int new_element){
+node * add(node*head, int new_element){
 
-    if (idx == NULL){
-        idx = (node*) malloc(sizeof(node));
-        idx -> x = new_element;
-        idx -> next = idx;
-        return idx;
+    if (head == NULL){
+        head = (node*) malloc(sizeof(node));
+        head -> x = new_element;
+        head -> next = head;
+        return head;
     }
 
-    node * iter = idx; 
-    while(iter -> next != idx){
+    node * iter = head; 
+    while(iter -> next != head){
         iter = iter -> next;
     }
     
     node * tmp = (node*) malloc(sizeof(node));
-    tmp -> next = idx;
+    tmp -> next = head;
     iter -> next = tmp;
     tmp -> x = new_element;
-    return idx;
+    return head;
 }
 
-node * insert(node*idx, int new_element){
+node * insert(node*head, int new_element){
 
-    if(idx == NULL){          // if linkedlist is empty
-        idx = add(idx, new_element);
-        return idx;
+    if(head == NULL){          // if linkedlist is empty
+        head = add(head, new_element);
+        return head;
     }
 
     else{
         node * temp = (node*) malloc(sizeof(node));
 
-        if (idx -> x >= new_element){        // add element as root
-            temp -> next = idx;
+        if (head -> x >= new_element){        // add element as root
+            temp -> next = head;
             temp -> x = new_element;
-            node * iter = idx;
-            while(iter -> next != idx)
+            node * iter = head;
+            while(iter -> next != head)
                 iter = iter -> next;
             iter -> next = temp;
             return temp; // send temp as new root, it is important to update root's pointer in main
         }
 
-        node * iter = idx;
-        while(iter -> next != idx && iter -> next -> x < new_element)
+        node * iter = head;
+        while(iter -> next != head && iter -> next -> x < new_element)
             iter = iter -> next;
 
         temp -> next = iter -> next;    
         temp -> x = new_element;
         iter -> next = temp;
-        return idx;
+        return head;
     }
 }
 
-node * delete(node*idx, int element){
+node * delete(node*head, int element){
 
-    if(idx == NULL){
+    if(head == NULL){
         printf("There is no element to remove. List has 0 element.\n");
-        return idx;
+        return head;
     }
-    else if(idx -> next == idx && idx -> x == element)
+    else if(head -> next == head && head -> x == element)
     {
         printf("Your last element has removed. From now, you have 0 element in the list.");
-        node * tmp = idx;
-        idx = NULL; // 0 element has remained.
+        node * tmp = head;
+        head = NULL; // 0 element has remained.
         free(tmp);
-        return idx; 
+        return head; 
     }
-    else if(idx -> x == element){ // if the root equals to element we search (in other words first element of the list)
-        node * iter = idx;
-        while(iter -> next != idx) // we must change the next of last element to point new root.
+    else if(head -> x == element){ // if the root equals to element we search (in other words first element of the list)
+        node * iter = head;
+        while(iter -> next != head) // we must change the next of last element to point new root.
             iter = iter -> next;
 
-        node * tmp = idx;
-        idx = idx -> next;
-        iter -> next = idx; // we change last element's next -> new root
+        node * tmp = head;
+        head = head -> next;
+        iter -> next = head; // we change last element's next -> new root
         free(tmp);
-        return idx;      
+        return head;      
     }
     else{
-        node * iter = idx;
-        while(iter -> next != idx && iter -> next -> x != element)
+        node * iter = head;
+        while(iter -> next != head && iter -> next -> x != element)
             iter = iter -> next;
 
-        if(iter -> next == idx){
+        if(iter -> next == head){
             printf("There is no such element in the list.\n");
-            return idx;
+            return head;
         }
 
         node * tmp = iter -> next;
         iter -> next = iter -> next -> next;
         free(tmp);
-        return idx;
+        return head;
     }
 }

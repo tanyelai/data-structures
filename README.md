@@ -4,7 +4,7 @@ _____
 
 | Data Structures | Available Baselines | Homeworks/Projects |
 | --- | --- | --- |
-| Linked Lists | [Normal](https://github.com/Toygarr/data-structures/blob/main/Linked%20Lists/linkedlist.c), [Circular](https://github.com/Toygarr/data-structures/blob/main/Linked%20Lists/circular_linkedlist.c), [Doubly](https://github.com/Toygarr/data-structures/blob/main/Linked%20Lists/doubly_linkedlist.c)| |
+| Linked Lists | [Single](https://github.com/Toygarr/data-structures/blob/main/Linked%20Lists/linkedlist.c), [Circular](https://github.com/Toygarr/data-structures/blob/main/Linked%20Lists/circular_linkedlist.c), [Doubly](https://github.com/Toygarr/data-structures/blob/main/Linked%20Lists/doubly_linkedlist.c)| |
 | Stacks | | |
 | Queues | | |
 | Trees, Binary Trees | | | 

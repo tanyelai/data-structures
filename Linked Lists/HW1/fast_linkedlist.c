@@ -44,8 +44,18 @@ int main(){
     }
     print(head);
 
-    head = createNewDimensions(head, dim);
-
+    head = createNewDimensions(head, 5);
+    print(head); 
+    head = createNewDimensions(head, 3);
+    //head = createNewDimensions(head, (dim+1)/2);
+    print(head);  
+    printf("\n");
+    printf("2.stage'in 2. elemani: ");
+    printf("%d", head->next_col->next_row->next_row->data);
+    printf("\n1.stage'in 2. elemani: ");
+    printf("%d", head->next_col->next_col->next_row->next_row->data);
+    printf("\n1.stage'in 5. elemani: ");
+    printf("%d", head->next_col->next_col->next_row->next_row->next_row->next_row->next_row->data);
 }
 
 int count_dimension(int n){
@@ -89,22 +99,26 @@ node * createNewDimensions(node* head, int dim){
     new_stage_head -> data = -1;
     new_stage_head -> next_row = NULL;
     new_stage_head -> next_col = head;
-    printf("Error");
+    printf("Error\n");
     int i;
     node*iter = head->next_row;
-    for (i=0; i<dim; i=i+2){
+    while(dim >= 1){
         int new_element;
-        while(iter -> next_row != NULL){
-            new_element = iter->data;
-            new_stage_head = initialize(new_stage_head, new_element);
-            node*finder=new_stage_head;
-            while(finder->next_row->data != new_element || finder->next_row != NULL)
-                finder = finder -> next_row;
+        new_element = iter->data;
+        new_stage_head = initialize(new_stage_head, new_element);
+        node*finder=new_stage_head->next_row;
+        while(finder->data != new_element)
+            finder = finder -> next_row;
 
-            finder->next_row->next_col = iter;
-            iter = iter -> next_row -> next_row;
-        }
+        finder->next_col = iter;
+        if(iter->next_row != NULL)
+            iter = iter -> next_row -> next_row;              
+        dim--;
     }
+    /*if (dim == 1){
+        return new_stage_head;
+    }*/
 
-    return createNewDimensions(new_stage_head, ((dim+1)/2));
+    return new_stage_head;
+    //return createNewDimensions(new_stage_head, ((dim+1)/2));
 }

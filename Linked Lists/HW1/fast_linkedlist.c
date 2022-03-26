@@ -27,7 +27,7 @@ node* createNewDimensions(node*, int);
 int main(){
 
     int n, dim, i, new_element;
-    printf("Enter how many elements you will enter");
+    printf("Enter how many elements you will enter: ");
     scanf("%d", &n);
 
     dim = count_dimension(n) + 2; // this is the amount of stages for first initialization.
@@ -44,18 +44,16 @@ int main(){
     }
     print(head);
 
-    head = createNewDimensions(head, 5);
-    print(head); 
-    head = createNewDimensions(head, 3);
-    //head = createNewDimensions(head, (dim+1)/2);
-    print(head);  
+    head = createNewDimensions(head, n);
+
+    //print(head);  
     printf("\n");
-    printf("2.stage'in 2. elemani: ");
-    printf("%d", head->next_col->next_row->next_row->data);
-    printf("\n1.stage'in 2. elemani: ");
+    printf("5.stage'in 1. elemani: ");
+    printf("%d", head->next_col->next_row->data);
+    printf("\n4.stage'in 2. elemani: ");
     printf("%d", head->next_col->next_col->next_row->next_row->data);
-    printf("\n1.stage'in 5. elemani: ");
-    printf("%d", head->next_col->next_col->next_row->next_row->next_row->next_row->next_row->data);
+    printf("\n3.stage'in 5. elemani: ");
+    printf("%d", head->next_col->next_col->next_col->next_row->next_row->next_row->next_row->next_row->data);
 }
 
 int count_dimension(int n){
@@ -94,18 +92,20 @@ node * initialize(node*head, int new_element){
 
 
 node * createNewDimensions(node* head, int dim){
-    printf("Error");
+    int t = (dim+1)/2;
+
     node * new_stage_head = (node*)malloc(sizeof(node));
     new_stage_head -> data = -1;
     new_stage_head -> next_row = NULL;
     new_stage_head -> next_col = head;
-    printf("Error\n");
+    //printf("Error\n");
+    //printf("%d", dim);
     int i;
     node*iter = head->next_row;
-    while(dim >= 1){
+    while(t >= 1){
         int new_element;
         new_element = iter->data;
-        new_stage_head = initialize(new_stage_head, new_element);
+        new_stage_head = initialize(new_stage_head, new_element); // we use past init function for creating new nodes
         node*finder=new_stage_head->next_row;
         while(finder->data != new_element)
             finder = finder -> next_row;
@@ -113,12 +113,16 @@ node * createNewDimensions(node* head, int dim){
         finder->next_col = iter;
         if(iter->next_row != NULL)
             iter = iter -> next_row -> next_row;              
-        dim--;
+        t--;
     }
-    /*if (dim == 1){
-        return new_stage_head;
-    }*/
+    if (dim == 1){
+        node * new_stage_head = (node*)malloc(sizeof(node));
+        new_stage_head -> data = -1;
+        new_stage_head -> next_row = NULL;
+        new_stage_head -> next_col = head;
+        return new_stage_head;   
+    }
 
-    return new_stage_head;
-    //return createNewDimensions(new_stage_head, ((dim+1)/2));
+    //return new_stage_head;
+    return createNewDimensions(new_stage_head, (dim+1)/2);
 }

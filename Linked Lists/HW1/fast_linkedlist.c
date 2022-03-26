@@ -42,18 +42,21 @@ int main(){
         scanf("%d", &new_element);
         head = initialize(head, new_element);
     }
-    print(head);
-
     head = createNewDimensions(head, n);
 
-    //print(head);  
+    // 1. stage head -> NULL
+    // 2. stage head -> x -> NULL
+    // 3. stage head -> x -> y -> NULL 
+    print(head);  
     printf("\n");
-    printf("5.stage'in 1. elemani: ");
+    printf("2.stage'in 1. elemani: ");
     printf("%d", head->next_col->next_row->data);
-    printf("\n4.stage'in 2. elemani: ");
+    printf("\n3.stage'in 2. elemani: ");
     printf("%d", head->next_col->next_col->next_row->next_row->data);
-    printf("\n3.stage'in 5. elemani: ");
+    printf("\n4.stage'in 5. elemani: ");
     printf("%d", head->next_col->next_col->next_col->next_row->next_row->next_row->next_row->next_row->data);
+    printf("\n5.stage'in 5. elemani: ");
+    printf("%d", head->next_col->next_col->next_col->next_row->next_row->next_row->next_row->next_col->next_row->data);
 }
 
 int count_dimension(int n){
@@ -64,12 +67,18 @@ int count_dimension(int n){
 
 
 void print(node*head){
-    int i = 0;
-    head = head->next_row;
-    while(head != NULL){ // we will travel until we reach the NULL at the end
-        i++;
-        printf("%d. element: %d\n", i, head -> data);
-        head = head -> next_row;
+    int t = 1;
+    printf("1. stage: \nhead->NULL\n");
+    head = head -> next_col; // we pass the first stage because there is no element.
+    while(head != NULL){
+        printf("%d. stage: \nhead->", ++t);
+        node* iter = head;
+        while(iter->next_row != NULL){ // we will travel until we reach the NULL at the end
+            printf("%d ->", iter->next_row->data);
+            iter = iter -> next_row;
+        }
+        printf("NULL\n");
+    head = head -> next_col;
     }
 }
 

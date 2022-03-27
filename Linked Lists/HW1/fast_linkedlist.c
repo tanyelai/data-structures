@@ -20,6 +20,7 @@ int count_dimension(int);
 void print(node *);
 //void search(node*, int);
 node* initialize(node*, int); // creating ftwintirst linked list
+void search(node*, int, int);
 node* insert(node*, int);
 node* delete(node*, int);
 node* createNewDimensions(node*, int);
@@ -49,14 +50,21 @@ int main(){
     // 3. stage head -> x -> y -> NULL 
     print(head);  
     printf("\n");
+
+    search(head, 9, dim);
+    search(head, 10, dim);
+    search(head, 0, dim);
+    search(head, 6, dim);
+    search(head, 4, dim);
+
     printf("2.stage'in 1. elemani: ");
     printf("%d", head->next_col->next_row->data);
     printf("\n3.stage'in 2. elemani: ");
     printf("%d", head->next_col->next_col->next_row->next_row->data);
-    printf("\n4.stage'in 5. elemani: ");
-    printf("%d", head->next_col->next_col->next_col->next_row->next_row->next_row->next_row->next_row->data);
-    printf("\n5.stage'in 5. elemani: ");
-    printf("%d", head->next_col->next_col->next_col->next_row->next_row->next_row->next_row->next_col->next_row->data);
+    printf("\n4.stage'in 2. elemani: ");
+    printf("%d", head->next_col->next_col->next_col->next_row->next_row->data);
+    printf("\n5.stage'in 4. elemani: ");
+    printf("%d", head->next_col->next_col->next_col->next_row->next_row->next_col->next_row->data);
 }
 
 int count_dimension(int n){
@@ -134,4 +142,30 @@ node * createNewDimensions(node* head, int dim){
 
     //return new_stage_head;
     return createNewDimensions(new_stage_head, (dim+1)/2);
+}
+
+void search(node*head, int element, int dim){
+
+    node*iter = head;
+    iter = iter -> next_col; // first stage has no element
+    int t=2;
+  
+    while(t!=dim+1){
+
+        while (iter->next_row != NULL && element >= iter->next_row->data)
+            iter = iter -> next_row;
+        
+        if(element == iter->data){
+            printf("Element found at %d. stage\n", t);
+            t=dim;
+        }
+        else if(t == dim)
+            printf("There is no such element that matched with %d\n", element);
+        
+        
+        iter = iter -> next_col;
+        t++;
+    }
+
+
 }

@@ -16,78 +16,80 @@ typedef struct n node;
 // ***********************************************************************************************************
 
 
-int count_dimension(int);
-void print(node *);
-//void search(node*, int);
-node* initialize(node*, int); // creating first linked list
-void search(node*, int, int);
-node* insert(node*, int, int*);
-node* delete(node*, int, int*);
-node* createNewDimensions(node*, int);
+int count_dimension(int);  // It is a function that gets stage count using linked list size, will be used for search
+void print(node *);        // It is a function for printing every element of stages in order.
+node* initialize(node*, int); // It is a function for creating first linked list and for other functions to create new nodes.
+void search(node*, int, int); // It is a function for search specific element.
+node* insert(node*, int, int*); // It is a function that insert given element and updates the stages.
+node* delete(node*, int, int*); // It is a function that delete given element and updates the stages.
+node* createNewDimensions(node*, int); // It is a function that create new stages and written as ...
+                                      //...recursive and will be used in the insert, delete and first init.
 
 int main(){
 
-    int n, dim, i, new_element;
-    printf("Enter how many elements you will enter: ");
-    scanf("%d", &n);
+    int n, dim, i, new_element, expression;
+    printf("\nIf you have no existing linked list please initialize a linked list first by using 1.");
+    int flag = 1;
+    while(flag){
+        
+        printf("\n\
+                1) Initialize a new linked list.\n\
+                2) Search for element.\n\
+                3) Insert new element to current linked list.\n\
+                4) Delete element from the current linked list.\n\
+                5) Print current state of linked list.\n\
+                6) Quit\n\
+                Choice: ");
 
-    dim = count_dimension(n) + 2; // this is the amount of stages for first initialization.
+        scanf("%d", &expression);
 
-    node*head = (node*) malloc(sizeof(node));
-    head -> data = -1;
-    head -> next_row = NULL;
-    head -> next_col = NULL;
+        switch (expression)
+        {
+        case 1:
+            printf("Enter how many elements you will enter: ");
+            scanf("%d", &n);
+            node*head = (node*) malloc(sizeof(node));
+            head -> data = -1;
+            head -> next_row = NULL;
+            head -> next_col = NULL;
 
-    for (i=0; i<n; i++){
-        printf("enter new element: ");
-        scanf("%d", &new_element);
-        head = initialize(head, new_element);
-    }
-    head = createNewDimensions(head, n);
-
-    // 1. stage head -> NULL
-    // 2. stage head -> x -> NULL
-    // 3. stage head -> x -> y -> NULL 
-    
-    printf("\n\nTASK 2: PRINT EVERY STAGE\n");
-    print(head);  
-
-    printf("\n\nTASK 3: SEARCH:\n");
-    search(head, 7, dim);
-    search(head, 3, dim);
-    search(head, 5, dim);
-    search(head, 10, dim);
-
-    // 6.a TASK
-    /*
-    printf("\n");
-    head = insert(head, 1, &n);
-    printf("\nElement count: %d\n", n);
-    print(head);
-    head = insert(head, 8, &n);
-    printf("\nElement count: %d", n);
-    printf("\n");
-    print(head);  
-    head = insert(head, 20, &n);
-    printf("Element count: %d\n", n);
-    print(head);  
-    */
-
-    // 6.b TASK
-    
-    printf("\n");
-    head = delete(head, 4, &n);
-    printf("Element count: %d\n", n);
-    print(head);
-    printf("\n");
-    head = delete(head, 6, &n);
-    printf("Element count: %d\n", n);
-    print(head);
-    printf("\n");
-    head = delete(head, 20, &n);
-    printf("Element count: %d\n", n);
-    print(head);  
-    
+            for (i=0; i<n; i++){
+                printf("Enter new element: ");
+                scanf("%d", &new_element);
+                head = initialize(head, new_element);
+            }
+            head = createNewDimensions(head, n);
+            print(head);
+            break;
+        case 2:
+            printf("Enter the element that you want to search for: ");
+            scanf("%d", &new_element);
+            dim = count_dimension(n) + 2; // this is the amount of stages for first initialization.
+            search(head, new_element, dim);
+            break;
+        case 3:
+            printf("Enter the element that you want to insert to the list: ");
+            scanf("%d", &new_element);
+            head = insert(head, new_element, &n);
+            print(head);
+            break;
+        case 4:
+            printf("Enter the element that you want to delete from the list: ");
+            scanf("%d", &new_element);
+            head = delete(head, new_element, &n);
+            print(head);  
+            break;
+        case 5:
+            print(head);  
+            break;        
+        case 6:
+            flag = 0;
+            break;
+        
+        default:
+            break;
+        }
+    }    
 }
 
 int count_dimension(int n){
@@ -122,7 +124,7 @@ node * delete(node*head, int element, int *n){
         iter = iter -> next_row;
 
     if(iter -> next_row == NULL){
-        printf("('%d') is not in the list.\n", element);
+        printf("\n('%d') is not in the list.\n", element);
         return safe_quit;
     }
 
@@ -199,11 +201,11 @@ void search(node*head, int element, int dim){
             iter = iter -> next_row;
         
         if(element == iter->data){
-            printf("Element '%d' found at %d. stage\n", element, t);
+            printf("\nElement '%d' found at %d. stage\n", element, t);
             t=dim;
         }
         else if(t == dim)
-            printf("There is no such element that matched with %d\n", element);
+            printf("\nThere is no such element that matched with %d\n", element);
         
         
         iter = iter -> next_col;

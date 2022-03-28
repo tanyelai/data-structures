@@ -51,8 +51,6 @@ int main(){
     
     printf("\n\nTASK 2: PRINT EVERY STAGE\n");
     print(head);  
-    printf("\n");
-
 
     printf("\n\nTASK 3: SEARCH:\n");
     search(head, 7, dim);
@@ -124,7 +122,7 @@ node * delete(node*head, int element, int *n){
         iter = iter -> next_row;
 
     if(iter -> next_row == NULL){
-        printf("There is no such element in the list.\n");
+        printf("('%d') is not in the list.\n", element);
         return safe_quit;
     }
 
@@ -135,7 +133,6 @@ node * delete(node*head, int element, int *n){
     head = createNewDimensions(head, *n);
     return head;
 }
-
 
 
 node * initialize(node*head, int new_element){

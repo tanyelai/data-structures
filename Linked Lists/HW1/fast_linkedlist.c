@@ -22,7 +22,7 @@ void print(node *);
 node* initialize(node*, int); // creating first linked list
 void search(node*, int, int);
 node* insert(node*, int, int*);
-node* delete(node*, int);
+node* delete(node*, int, int*);
 node* createNewDimensions(node*, int);
 
 int main(){
@@ -48,60 +48,48 @@ int main(){
     // 1. stage head -> NULL
     // 2. stage head -> x -> NULL
     // 3. stage head -> x -> y -> NULL 
+    
+    printf("\n\nTASK 2: PRINT EVERY STAGE\n");
     print(head);  
     printf("\n");
 
-    search(head, 9, dim);
+
+    printf("\n\nTASK 3: SEARCH:\n");
+    search(head, 7, dim);
+    search(head, 3, dim);
+    search(head, 5, dim);
     search(head, 10, dim);
-    search(head, 0, dim);
-    search(head, 6, dim);
-    search(head, 4, dim);
 
-    printf("2.stage'in 1. elemani: ");
-    printf("%d", head->next_col->next_row->data);
-    printf("\n3.stage'in 2. elemani: ");
-    printf("%d", head->next_col->next_col->next_row->next_row->data);
-    printf("\n4.stage'in 2. elemani: ");
-    printf("%d", head->next_col->next_col->next_col->next_row->next_row->data);
-    //printf("\n5.stage'in 4. elemani: ");
-    //printf("%d", head->next_col->next_col->next_col->next_row->next_row->next_col->next_row->data);
+    // 6.a TASK
+    /*
+    printf("\n");
+    head = insert(head, 1, &n);
+    printf("\nElement count: %d\n", n);
+    print(head);
+    head = insert(head, 8, &n);
+    printf("\nElement count: %d", n);
+    printf("\n");
+    print(head);  
+    head = insert(head, 20, &n);
+    printf("Element count: %d\n", n);
+    print(head);  
+    */
 
-    printf("\ndim: %d\n", dim);
-    printf("\nn: %d", n);
+    // 6.b TASK
+    
     printf("\n");
-    head = insert(head, 10, &n);
-    print(head); 
-    head = createNewDimensions(head, n);
-    printf("\nn: %d", n);
+    head = delete(head, 4, &n);
+    printf("Element count: %d\n", n);
+    print(head);
     printf("\n");
-    print(head); 
-    head = insert(head, 11, &n);
-    head = createNewDimensions(head, n);
+    head = delete(head, 6, &n);
+    printf("Element count: %d\n", n);
+    print(head);
     printf("\n");
-    printf("n: %d\n", n);
+    head = delete(head, 20, &n);
+    printf("Element count: %d\n", n);
     print(head);  
-    head = insert(head, 15, &n);
-    head = createNewDimensions(head, n);
-    printf("\n");
-    printf("n: %d\n", n);
-    print(head);  
-    head = insert(head, 13, &n);
-    head = createNewDimensions(head, n);
-    head = insert(head, 12, &n);
-    head = createNewDimensions(head, n);
-    head = insert(head, 16, &n);
-    head = createNewDimensions(head, n);
-    head = insert(head, 17, &n);
-    head = createNewDimensions(head, n);
-    head = insert(head, 18, &n);
-    head = createNewDimensions(head, n);
-    head = insert(head, 19, &n);
-    head = createNewDimensions(head, n);
-    printf("\n");
-    printf("n: %d\n", n);
-    printf("\ndim: %d\n", dim);
-    print(head);  
-
+    
 }
 
 int count_dimension(int n){
@@ -117,10 +105,37 @@ node * insert(node*head, int new_element, int *n){
 
     head = initialize(head, new_element);
     *n = *n+1; // we use pointer and adress of n because we cannot pass n's value back with return in C language.
-    printf("\nThe stages have been updated with new element.\n");
+    head = createNewDimensions(head, *n);
+    printf("\nNew element has been added to stages.\n");
 
     return head;
 }
+
+node * delete(node*head, int element, int *n){
+
+    node*safe_quit = head; // we use head in trace to functionalize the other methods
+                           // so if we cannot find element we do not want to send new head pointer
+                           // we should protect the pointer which points head of the stages.
+    while(head->next_col!=NULL)
+        head = head -> next_col;  // get cursor onto the main linkedlist
+
+    node * iter = head;
+    while(iter -> next_row != NULL && iter -> next_row -> data != element)
+        iter = iter -> next_row;
+
+    if(iter -> next_row == NULL){
+        printf("There is no such element in the list.\n");
+        return safe_quit;
+    }
+
+    node * tmp = iter -> next_row;
+    iter -> next_row = iter -> next_row -> next_row;
+    free(tmp);
+    *n = *n-1;
+    head = createNewDimensions(head, *n);
+    return head;
+}
+
 
 
 node * initialize(node*head, int new_element){
@@ -187,7 +202,7 @@ void search(node*head, int element, int dim){
             iter = iter -> next_row;
         
         if(element == iter->data){
-            printf("Element found at %d. stage\n", t);
+            printf("Element '%d' found at %d. stage\n", element, t);
             t=dim;
         }
         else if(t == dim)

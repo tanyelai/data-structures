@@ -19,9 +19,9 @@ typedef struct n node;
 int count_dimension(int);
 void print(node *);
 //void search(node*, int);
-node* initialize(node*, int); // creating ftwintirst linked list
+node* initialize(node*, int); // creating first linked list
 void search(node*, int, int);
-node* insert(node*, int);
+node* insert(node*, int, int*);
 node* delete(node*, int);
 node* createNewDimensions(node*, int);
 
@@ -63,8 +63,45 @@ int main(){
     printf("%d", head->next_col->next_col->next_row->next_row->data);
     printf("\n4.stage'in 2. elemani: ");
     printf("%d", head->next_col->next_col->next_col->next_row->next_row->data);
-    printf("\n5.stage'in 4. elemani: ");
-    printf("%d", head->next_col->next_col->next_col->next_row->next_row->next_col->next_row->data);
+    //printf("\n5.stage'in 4. elemani: ");
+    //printf("%d", head->next_col->next_col->next_col->next_row->next_row->next_col->next_row->data);
+
+    printf("\ndim: %d\n", dim);
+    printf("\nn: %d", n);
+    printf("\n");
+    head = insert(head, 10, &n);
+    print(head); 
+    head = createNewDimensions(head, n);
+    printf("\nn: %d", n);
+    printf("\n");
+    print(head); 
+    head = insert(head, 11, &n);
+    head = createNewDimensions(head, n);
+    printf("\n");
+    printf("n: %d\n", n);
+    print(head);  
+    head = insert(head, 15, &n);
+    head = createNewDimensions(head, n);
+    printf("\n");
+    printf("n: %d\n", n);
+    print(head);  
+    head = insert(head, 13, &n);
+    head = createNewDimensions(head, n);
+    head = insert(head, 12, &n);
+    head = createNewDimensions(head, n);
+    head = insert(head, 16, &n);
+    head = createNewDimensions(head, n);
+    head = insert(head, 17, &n);
+    head = createNewDimensions(head, n);
+    head = insert(head, 18, &n);
+    head = createNewDimensions(head, n);
+    head = insert(head, 19, &n);
+    head = createNewDimensions(head, n);
+    printf("\n");
+    printf("n: %d\n", n);
+    printf("\ndim: %d\n", dim);
+    print(head);  
+
 }
 
 int count_dimension(int n){
@@ -73,22 +110,18 @@ int count_dimension(int n){
     return count_dimension((n+1)/2) + 1;
 }
 
+node * insert(node*head, int new_element, int *n){
+    
+    while(head->next_col!=NULL)
+        head = head -> next_col;  // get cursor onto the main linkedlist
 
-void print(node*head){
-    int t = 1;
-    printf("1. stage: \nhead->NULL\n");
-    head = head -> next_col; // we pass the first stage because there is no element.
-    while(head != NULL){
-        printf("%d. stage: \nhead->", ++t);
-        node* iter = head;
-        while(iter->next_row != NULL){ // we will travel until we reach the NULL at the end
-            printf("%d ->", iter->next_row->data);
-            iter = iter -> next_row;
-        }
-        printf("NULL\n");
-    head = head -> next_col;
-    }
+    head = initialize(head, new_element);
+    *n = *n+1; // we use pointer and adress of n because we cannot pass n's value back with return in C language.
+    printf("\nThe stages have been updated with new element.\n");
+
+    return head;
 }
+
 
 node * initialize(node*head, int new_element){
 
@@ -96,8 +129,6 @@ node * initialize(node*head, int new_element){
     while(current -> next_row != NULL && new_element >= current -> next_row -> data)
         current = current -> next_row;
     
-    // we need temporary box to not lose linked list at the space while changing pointers
-    // we have to point the linked list if we break it without adding new point, we cannot reach that list again
     node * temp = (node*) malloc(sizeof(node));
 
     temp -> next_row = current -> next_row;
@@ -166,6 +197,20 @@ void search(node*head, int element, int dim){
         iter = iter -> next_col;
         t++;
     }
+}
 
-
+void print(node*head){
+    int t = 1;
+    printf("1. stage: \nhead->NULL\n");
+    head = head -> next_col; // we pass the first stage because there is no element.
+    while(head != NULL){
+        printf("%d. stage: \nhead->", ++t);
+        node* iter = head;
+        while(iter->next_row != NULL){ // we will travel until we reach the NULL at the end
+            printf("%d ->", iter->next_row->data);
+            iter = iter -> next_row;
+        }
+        printf("NULL\n");
+        head = head -> next_col;
+    }
 }

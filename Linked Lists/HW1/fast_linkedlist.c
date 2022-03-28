@@ -27,7 +27,7 @@ node* createNewDimensions(node*, int); // It is a function that create new stage
 
 int main(){
 
-    int n, dim, i, new_element, expression;
+    int n, dim, i, new_element, expression, x;
     printf("\nIf you have no existing linked list please initialize a linked list first by using 1.");
     int flag = 1;
     while(flag){
@@ -46,7 +46,7 @@ int main(){
         switch (expression)
         {
         case 1:
-            printf("Enter how many elements you will enter: ");
+            printf("\nEnter how many elements you will enter: ");
             scanf("%d", &n);
             node*head = (node*) malloc(sizeof(node));
             head -> data = -1;
@@ -62,22 +62,35 @@ int main(){
             print(head);
             break;
         case 2:
-            printf("Enter the element that you want to search for: ");
-            scanf("%d", &new_element);
-            dim = count_dimension(n) + 2; // this is the amount of stages for first initialization.
-            search(head, new_element, dim);
+            printf("\nEnter the count of element that you will search: ");
+            scanf("%d", &x);
+            for(i=0; i<x; i++){
+                printf("\nEnter the element that you want to search for: ");
+                scanf("%d", &new_element);
+                dim = count_dimension(n) + 2; // this is the amount of stages for first initialization.
+                search(head, new_element, dim);
+            }
             break;
         case 3:
-            printf("Enter the element that you want to insert to the list: ");
-            scanf("%d", &new_element);
-            head = insert(head, new_element, &n);
-            print(head);
+            printf("\nEnter the count of element that you will add: ");
+            scanf("%d", &x);
+            for(i=0; i<x; i++){
+                printf("\nEnter the element that you want to insert to the list: ");
+                scanf("%d", &new_element);
+                head = insert(head, new_element, &n);
+                print(head);
+            }
+
             break;
         case 4:
-            printf("Enter the element that you want to delete from the list: ");
-            scanf("%d", &new_element);
-            head = delete(head, new_element, &n);
-            print(head);  
+            printf("\nEnter the count of element that you will delete: ");
+            scanf("%d", &x);
+            for (i=0; i<x; i++){
+                printf("\nEnter the element that you want to delete from the list: ");
+                scanf("%d", &new_element);
+                head = delete(head, new_element, &n);
+                print(head); 
+            } 
             break;
         case 5:
             print(head);  
@@ -101,10 +114,10 @@ int count_dimension(int n){
 node * insert(node*head, int new_element, int *n){
     
     while(head->next_col!=NULL)
-        head = head -> next_col;  // get cursor onto the main linkedlist
+        head = head -> next_col;  // get cursor onto the main linked list
 
     head = initialize(head, new_element);
-    *n = *n+1; // we use pointer and adress of n because we cannot pass n's value back with return in C language.
+    *n = *n+1; // we use pointer and address of n because we cannot pass n's value back with return in C language.
     head = createNewDimensions(head, *n);
     printf("\nNew element has been added to stages.\n");
 
@@ -117,7 +130,7 @@ node * delete(node*head, int element, int *n){
                            // so if we cannot find element we do not want to send new head pointer
                            // we should protect the pointer which points head of the stages.
     while(head->next_col!=NULL)
-        head = head -> next_col;  // get cursor onto the main linkedlist
+        head = head -> next_col;  // get cursor onto the main linked list
 
     node * iter = head;
     while(iter -> next_row != NULL && iter -> next_row -> data != element)
@@ -160,8 +173,7 @@ node * createNewDimensions(node* head, int dim){
     new_stage_head -> data = -1;
     new_stage_head -> next_row = NULL;
     new_stage_head -> next_col = head;
-    //printf("Error\n");
-    //printf("%d", dim);
+
     int i;
     node*iter = head->next_row;
     while(t >= 1){
@@ -185,7 +197,6 @@ node * createNewDimensions(node* head, int dim){
         return new_stage_head;   
     }
 
-    //return new_stage_head;
     return createNewDimensions(new_stage_head, (dim+1)/2);
 }
 

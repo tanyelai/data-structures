@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
 #define MAX 10
 
 struct n{
@@ -27,13 +26,12 @@ int main(){
     push(s, 10);
     push(s, 15);
     push(s, 20);
-    push(s, 20);
-    push(s, 20);
-    push(s, 20);
+    push(s, 30);
+    push(s, 40);
     x = pop(s);
-    printf("%d\n",x);
+    printf("Popped value: %d\n",x);
     x = pop(s);
-    printf("%d\n",x);
+    printf("Popped value: %d\n",x);
 
     print(s);
 }

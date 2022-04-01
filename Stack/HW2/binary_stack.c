@@ -17,6 +17,7 @@ void top(STACK*, int*);
 void initStack(STACK*);
 void print(STACK*);
 void BinaryConverter(STACK* , int, int, char *);
+void StackCounter(STACK*, int, char *);
 
 int main(){
 
@@ -29,7 +30,7 @@ int main(){
     scanf("%d", &x);
     if(x > 127 || x < -128){
         SIZE += 8;
-        if (x > 32768 || x < -32768){
+        if (x > 32767 || x < -32768){
             SIZE += 8;
             if(x > 8388607 || x < -8388608 ){
                 SIZE += 8;
@@ -39,6 +40,7 @@ int main(){
     u_i = (unsigned int)x;
     char binaryString[SIZE];
     BinaryConverter(s, u_i, SIZE, &binaryString[SIZE]);
+    StackCounter(s, SIZE, &binaryString[SIZE]);
 }
 
 void BinaryConverter(STACK* s, int x, int SIZE, char binaryString[])
@@ -46,14 +48,39 @@ void BinaryConverter(STACK* s, int x, int SIZE, char binaryString[])
     int i = 0;
         for(i=SIZE-1; i>=0; i--){
             binaryString[i] = x & 0x1;
-            push(s, binaryString[i]);
+            if(binaryString[i] == 0)
+                push(s, binaryString[i]);
             x = x >> 1;
         }
-        printf("binary string: ");
-        for(i=0; i <= SIZE-1; i++)
-            printf("%d", binaryString[i]);
+}
+
+void StackCounter(STACK* s, int SIZE, char binaryString[]){
+        int i=0;
         print(s);
-        while(s->top != 0)
+        int flag = 1;
+
+        for(i=0; i <= SIZE-1; i++){
+        
+            if(flag == 1 && s->top != 0 && s->item[s->top] == 0){
+                if(binaryString[i] == 1)
+                    pop(s);
+                //printf("%d", binaryString[i]);
+            }
+            else{
+                flag = 0;
+                if(binaryString[i] == 1)
+                    push(s, binaryString[i]);
+            }
+        }
+
+        if(s->top == 0)
+            printf("\n*** 0 ve 1'ler eşit sayidadir. ***\n");
+        else if(s->item[s->top-1] == 0)
+            printf("\n*** 0'lar fazladir. Ek %d adet 1 gereklidir. ***\n", s->top);
+        else 
+            printf("\n*** 1'ler fazladir. Ek %d adet 0 gereklidir. ***\n", s->top);
+
+        while(s->item[s->top--] != 0)
            pop(s);
         printf("\n");
 }

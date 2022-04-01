@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAX 8
+#define MAX 32
 
 struct n{
     int item[MAX];
@@ -16,32 +16,41 @@ void pop(STACK*);
 void top(STACK*, int*);
 void initStack(STACK*);
 void print(STACK*);
-void BinaryConverter(STACK* s, int x);
+void BinaryConverter(STACK* , int, int, char *);
 
 int main(){
 
     STACK *s = (STACK*)malloc(sizeof(STACK));
     initStack(s);
-    int x;
+    int x; 
+    int SIZE = 8;
     unsigned int u_i;
     printf("Enter an integer: ");
     scanf("%d", &x);
+    if(x > 127 || x < -128){
+        SIZE += 8;
+        if (x > 32768 || x < -32768){
+            SIZE += 8;
+            if(x > 8388607 || x < -8388608 ){
+                SIZE += 8;
+            }
+        }
+    }
     u_i = (unsigned int)x;
-    BinaryConverter(s, u_i);
+    char binaryString[SIZE];
+    BinaryConverter(s, u_i, SIZE, &binaryString[SIZE]);
 }
 
-void BinaryConverter(STACK* s, int x)
+void BinaryConverter(STACK* s, int x, int SIZE, char binaryString[])
 {
     int i = 0;
-    char binaryString[8] = {0};
-
-        for(i=7; i>=0; i--){
+        for(i=SIZE-1; i>=0; i--){
             binaryString[i] = x & 0x1;
             push(s, binaryString[i]);
             x = x >> 1;
         }
         printf("binary string: ");
-        for(i=0; i <= 7; i++)
+        for(i=0; i <= SIZE-1; i++)
             printf("%d", binaryString[i]);
         print(s);
         while(s->top != 0)

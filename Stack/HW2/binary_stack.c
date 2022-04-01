@@ -16,8 +16,10 @@ void pop(STACK*);
 void top(STACK*, int*);
 void initStack(STACK*);
 void print(STACK*);
-void BinaryConverter(STACK* , int, int, char *);
-void StackCounter(STACK*, int, char *);
+void StackCounter(STACK*, int, char *); // This function is used to determine.
+void BinaryConverter(STACK* , int, int, char *); // I wrote this function to convert signed decimal to binary and ...
+                                                 // ... create stack which will allow us to determine whether 1 or 0 is more.
+
 
 int main(){
 
@@ -48,7 +50,7 @@ void BinaryConverter(STACK* s, int x, int SIZE, char binaryString[])
     int i = 0;
         for(i=SIZE-1; i>=0; i--){
             binaryString[i] = x & 0x1;
-            if(binaryString[i] == 0)
+            if(binaryString[i] == 0)  // I chose 0 to push and check with ones.
                 push(s, binaryString[i]);
             x = x >> 1;
         }
@@ -72,6 +74,12 @@ void StackCounter(STACK* s, int SIZE, char binaryString[]){
                     push(s, binaryString[i]);
             }
         }
+
+        printf("\nBinary Representation: ");
+        for (i = 0; i < SIZE; i++)
+            printf("%d", binaryString[i]);
+        
+        
 
         if(s->top == 0)
             printf("\n*** 0 ve 1'ler eşit sayidadir. ***\n");

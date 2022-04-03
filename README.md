@@ -1,4 +1,4 @@
-### This repository will be extended by my data structure codes to explain concepts easier. 
+### This repository will be extended by my data structure codes to use concepts faster. 
 
 _____
 

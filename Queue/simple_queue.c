@@ -88,5 +88,5 @@ void dequeue(queue *q){
     if(isEmpty(q))
         printf("\nThe queue is empty.\n");
     else
-        printf("Element '%d' is removed from the queue.\n", q->item[(q->front++)-1]);
+        printf("\nElement '%d' is removed from the queue.\n", q->item[(q->front++)-1]);
 }

@@ -23,9 +23,9 @@ int main(){
     initQueue(q);
 
     printf("\n ________________________________________________________\n");
-        printf("\n Imagine front and rear's indexes like [0, 1 ... MAX-1]\n");
-        printf("\n We print elements like front is starting from beginning,\n but real index in static array will be as given below.\n");
-        printf("\n ________________________________________________________\n");
+    printf("\n Imagine front and rear's indexes like [0, 1 ... MAX-1]\n");
+    printf("\n We print elements like front is starting from beginning,\n but real index in static array will be as given below.\n");
+    printf("\n ________________________________________________________\n");
 
     enqueue(q, 5);
     print(q);

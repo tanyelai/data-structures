@@ -13,7 +13,7 @@ typedef struct n queue;
 int isFull(queue*);
 int isEmpty(queue*);
 void enqueue(queue*, int);
-void dequeue(queue*, int*);
+void dequeue(queue*);
 void initQueue(queue*);
 void print(queue*);
 
@@ -22,15 +22,25 @@ int main(){
     queue *q = (queue*)malloc(sizeof(queue));
     initQueue(q);
 
-    int dequeued_element;
     enqueue(q, 5);
-    enqueue(q, 10);
     print(q);
-    enqueue(q, 20);
-    dequeue(q, &dequeued_element);
-    printf("dequeued element: %d", dequeued_element);
+    enqueue(q, 15);
     print(q);
-
+    enqueue(q, 25);
+    enqueue(q, 35);
+    enqueue(q, 45);
+    enqueue(q, 55);
+    enqueue(q, 65);
+    enqueue(q, 12);
+    enqueue(q, 13);
+    enqueue(q, 14);
+    enqueue(q, 99);
+    print(q);
+    dequeue(q);
+    dequeue(q);
+    print(q);
+    dequeue(q);
+    print(q);
 
     return 0;
 }
@@ -41,10 +51,12 @@ void initQueue(queue *q){
 }
 
 void print(queue* q){
-    printf("QUEUE:\n");
-    for(int i = q->front+1; i < q->rear; i++){
-        printf("|%d|-", q->item[i]);
+    printf("QUEUE: ");
+    int i;
+    for(i = q->front-1; i < q->rear; i++){
+        printf("|%d| ", q->item[i]);
     }
+    printf("\n\n");
 }
 
 int isEmpty(queue *q){
@@ -55,7 +67,7 @@ int isEmpty(queue *q){
 }
 
 int isFull(queue *q){
-    if(q->rear == MAX)
+    if(q->rear == MAX-1)
         return 1;
     else
         return 0;
@@ -63,16 +75,18 @@ int isFull(queue *q){
 
 void enqueue(queue *q, int value){
     if(isFull(q))
-        printf("The queue is full. You cannot add '%d' to the queue\n", value);
+        printf("\nThe queue is full. You cannot add '%d' to the queue\n", value);
     else{
-        q->rear++;
-        q->item[q->rear] = value;
+        if(isEmpty(q))
+            q->front++;
+        q->item[q->rear++] = value;
+        printf("\nElement '%d' is added to the queue.\n", value);
         }
 }
 
-void dequeue(queue *q, int *x){
+void dequeue(queue *q){
     if(isEmpty(q))
-        printf("The queue is empty.\n");
+        printf("\nThe queue is empty.\n");
     else
-        *x = q->item[++q->front];
+        printf("Element '%d' is removed from the queue.\n", q->item[(q->front++)-1]);
 }

@@ -15,8 +15,6 @@ int search(node *, int);
 int find_max(node *);
 int find_min(node *);
 
-
-
 int main(){
 
     node *bst = NULL;
@@ -102,8 +100,10 @@ node * delete(node *bst, int x){
     if (bst == NULL)
         return NULL;
     if (bst->data == x){
-        if(bst->left == NULL && bst->right == NULL)
+        if(bst->left == NULL && bst->right == NULL){
+            free(bst);
             return NULL;
+        }
         else if(bst->right != NULL){
             bst->data = find_min(bst->right);
             bst->right = delete(bst->right, find_min(bst->right));

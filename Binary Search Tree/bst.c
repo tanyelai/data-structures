@@ -34,15 +34,16 @@ int main(){
     printf("\nTree elements: ");
     traverse(bst);
     bst = delete(bst, 200);
-    printf("\nTree elements: ");
+    printf("\nTree elements after deletion: ");
     traverse(bst);
+    printf("\n");
     element = search(bst, 300);
     printf("\n If the results is 1, we found the element. Otherwise, it is not found. \n Result: %d\n", element);
     element = search(bst, 120);
     printf("\n If the results is 1, we found the element. Otherwise, it is not found. \n Result: %d\n", element);
    
     bst = delete(bst, 56);
-    printf("\nTree elements: ");
+    printf("\nTree elements after deletion: ");
     traverse(bst);
 
     printf("\n max: %d, min: %d\n", find_max(bst), find_min(bst));  

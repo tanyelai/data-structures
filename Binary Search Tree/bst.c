@@ -21,17 +21,27 @@ int main(){
 
     node *bst = NULL;
     int element;
-    bst = insert(bst, 10);
-    bst = insert(bst, 15);
-    bst = insert(bst, 120);
-    bst = insert(bst, 20);
-    bst = insert(bst, 30);
-    bst = insert(bst, 40);
-    bst = insert(bst, 70);
+    bst = insert(bst, 56);
+    bst = insert(bst, 200);
+    bst = insert(bst, 26);
+    bst = insert(bst, 190);
+    bst = insert(bst, 213);
+    bst = insert(bst, 18);
+    bst = insert(bst, 28);
+    bst = insert(bst, 12);
+    bst = insert(bst, 24);
+    bst = insert(bst, 27);
+    printf("\nTree elements: ");
+    traverse(bst);
+    bst = delete(bst, 200);
+    printf("\nTree elements: ");
+    traverse(bst);
     element = search(bst, 300);
     printf("\n If the results is 1, we found the element. Otherwise, it is not found. \n Result: %d\n", element);
     element = search(bst, 120);
     printf("\n If the results is 1, we found the element. Otherwise, it is not found. \n Result: %d\n", element);
+   
+    bst = delete(bst, 56);
     printf("\nTree elements: ");
     traverse(bst);
 
@@ -45,10 +55,13 @@ void traverse(node *bst){
     if (bst == NULL){
         return;
     }
-
+    //printf("\n RECURSIVE PASS 1 \n");
     traverse(bst->left);
+    //printf("\n RECURSIVE PASS 2 \n");
     printf("%d ", bst->data);
+    //printf("\n RECURSIVE PASS 3 \n");
     traverse(bst->right);
+    //printf("\n RECURSIVE PASS 4 \n");
 }
 
 int search(node *bst, int element){
@@ -82,6 +95,32 @@ node * insert(node *bst, int x){
         bst->left = insert(bst->left, x);
     
     return bst;
+}
+
+node * delete(node *bst, int x){
+    if (bst == NULL)
+        return NULL;
+    if (bst->data == x){
+        if(bst->left == NULL && bst->right == NULL)
+            return NULL;
+        else if(bst->right != NULL){
+            bst->data = find_min(bst->right);
+            bst->right = delete(bst->right, find_min(bst->right));
+        }
+        else{
+            bst->data = find_max(bst->left);
+            bst->left = delete(bst->left, find_max(bst->left));
+        }
+        return bst;
+    }
+    else if (bst->data < x){
+        bst->right = delete(bst->right, x);
+        return bst;
+    }
+    else{
+        bst->left = delete(bst->left, x);
+        return bst;
+    }
 }
 
 int find_max(node *bst){

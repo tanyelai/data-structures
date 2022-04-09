@@ -100,25 +100,25 @@ node * delete(node *bst, int x){
     if (bst == NULL)
         return NULL;
     if (bst->data == x){
-        if(bst->left == NULL && bst->right == NULL){
+        if(bst->left == NULL && bst->right == NULL){ //found element has no child
             free(bst);
             return NULL;
         }
-        else if(bst->right != NULL){
+        else if(bst->right != NULL){ //found element has right child
             bst->data = find_min(bst->right);
             bst->right = delete(bst->right, find_min(bst->right));
         }
-        else{
+        else{ //found element has left child
             bst->data = find_max(bst->left);
             bst->left = delete(bst->left, find_max(bst->left));
         }
         return bst;
     }
-    else if (bst->data < x){
+    else if (bst->data < x){ //element still not found, and if x greater than node, search for right node
         bst->right = delete(bst->right, x);
         return bst;
     }
-    else{
+    else{ //element still not found, and if x smaller than node, search for left node
         bst->left = delete(bst->left, x);
         return bst;
     }

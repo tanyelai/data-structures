@@ -19,25 +19,24 @@ int main(){
 
     node *bst = NULL;
     int element;
-    bst = insert(bst, 56);
-    bst = insert(bst, 200);
-    bst = insert(bst, 26);
-    bst = insert(bst, 190);
-    bst = insert(bst, 213);
-    bst = insert(bst, 18);
-    bst = insert(bst, 28);
-    bst = insert(bst, 12);
-    bst = insert(bst, 24);
-    bst = insert(bst, 27);
+    bst = insert(bst, 8);
+    bst = insert(bst, 3);
+    bst = insert(bst, 1);
+    bst = insert(bst, 6);
+    bst = insert(bst, 7);
+    bst = insert(bst, 10);
+    bst = insert(bst, 14);
+    bst = insert(bst, 4);
+
     printf("\nTree elements: ");
     traverse(bst);
-    bst = delete(bst, 200);
+    bst = delete(bst, 6);
     printf("\nTree elements after deletion: ");
     traverse(bst);
     printf("\n");
     element = search(bst, 300);
     printf("\n If the results is 1, we found the element. Otherwise, it is not found. \n Result: %d\n", element);
-    element = search(bst, 120);
+    element = search(bst, 4);
     printf("\n If the results is 1, we found the element. Otherwise, it is not found. \n Result: %d\n", element);
    
     bst = delete(bst, 56);
@@ -97,8 +96,10 @@ node * insert(node *bst, int x){
 }
 
 node * delete(node *bst, int x){
-    if (bst == NULL)
+    if (bst == NULL){
+        printf("\nThe element is not found in tree to delete.");
         return NULL;
+    }
     if (bst->data == x){
         if(bst->left == NULL && bst->right == NULL){ //found element has no child
             free(bst);

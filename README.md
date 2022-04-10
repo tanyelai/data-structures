@@ -8,6 +8,6 @@ _____
 | Stacks | [Cool Stack](https://github.com/Toygarr/data-structures/blob/main/Stack/stack.c) | [Binary Bit Comparator with Stack](https://github.com/Toygarr/data-structures/blob/main/Stack/HW2/binary_stack.c)|
 | Queues | [Simple](https://github.com/Toygarr/data-structures/blob/main/Queue/simple_queue.c), [Circular](https://github.com/Toygarr/data-structures/blob/main/Queue/circular_queue.c) | |
 | Binary Search Trees | [BST](https://github.com/Toygarr/data-structures/blob/main/Binary%20Search%20Tree/bst.c)| | 
-| Heap Trees and Heap Sort | [Heap Tree](https://github.com/Toygarr/data-structures/blob/main/Heap%20Tree/heap.c) | |
+| Heap Trees and Heap Sort | [Heap Tree & Heap Sort](https://github.com/Toygarr/data-structures/blob/main/Heap%20Tree/heap.c) | |
 | Graphs and Min Spanning Tree | | |
 | Search Algorithms | | |

@@ -1,5 +1,6 @@
 ### This repository includes my data structure codes written in C lang. to use concepts faster.
 
+Because of the university restrictions I escape from using global variables so you will see the usage of address passing to change local variables in most of the codes. In other resources, they mostly prefer using global variables to make it easier to code.
 _____
 
 | Data Structures | Available Baselines | Homeworks/Projects |

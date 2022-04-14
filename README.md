@@ -11,3 +11,5 @@ _____
 | Heap Trees and Heap Sort | [Heap Tree & Heap Sort](https://github.com/Toygarr/data-structures/blob/main/Heap%20Tree/heap.c) | |
 | Graphs and Min Spanning Tree | | |
 | Search Algorithms | | |
+
+#### We can use arrays, linked lists and heap trees to implement **priority queue** so it has no special implementation. For example, heap tree is available to use directly as a priority queue. In max-heap trees, we are aware of the first element of tree is the biggest. We can simply use that algorithm to realize priority queue efficiently.

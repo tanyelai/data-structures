@@ -14,7 +14,7 @@ SinglyLinkedListNode* mergeLists(SinglyLinkedListNode *headA, SinglyLinkedListNo
         headA = tmp;
     }
 
-    // create a iteration pointer to traverse on the list A without losing its head
+    // Create an iteration pointer to traverse on the list A without losing its head
     SinglyLinkedListNode *iter = headA;
 
     while (headB) {

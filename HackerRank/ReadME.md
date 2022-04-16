@@ -1,6 +1,6 @@
 ## Problem Names Referred Below:
-1) Merge two sorted linked lists
-2) Reverse a doubly linked list
+Problem 1: Merge two sorted linked lists
+Problem 2: Reverse a doubly linked list
 
 
 | HackerRank Description | Implementation |

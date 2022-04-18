@@ -106,17 +106,11 @@ node * insert(node*head, int new_element){
             temp -> x = new_element;
             return temp; // send temp as new root, it is important to update root's pointer in main
         }
-        else if(iter -> next != NULL && iter -> next -> x >= new_element){     // instertion
-            temp -> next = iter -> next;
-            temp -> x = new_element;
-            iter -> next = temp;
-            return head;
-        }
-        else{ // end of list
-            // we have already written code to add element to the end so why we won't use it?
-            head = add(head, new_element);
-            return head;
-        }
+        temp -> next = iter -> next;
+        temp -> x = new_element;
+        iter -> next = temp;
+        return head;
+       
     }
 }
 

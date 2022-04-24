@@ -91,7 +91,7 @@ node *readFile_createTree(node*bst){
     {
         while ((read = getline(&line, &len, file)) != -1) {
             printf("%s\n", line);
-
+            line[strlen(line)-2] = '\0';
             token = strtok(line, " ");
             filename = token;
             filename[strlen(filename)-1] = '\0';

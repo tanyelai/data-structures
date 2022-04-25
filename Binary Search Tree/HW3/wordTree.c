@@ -28,7 +28,7 @@ typedef struct n node;
 node * insertWord2BST(char*, char*, node *);
 node * deleteFile(node *, char*);
 node * deleteNode(node *, char*);
-void search(char*, node *, int);
+void search(char*, node *, int, char*);
 node *readFile_createTree(node*);
 node *readFile_findWords(node*, char *);
 void delete_tree(node* );
@@ -45,20 +45,21 @@ int main(){
     //printf("Word %s in File: %s\n", bst->word, bst->next_file->filename);
     //printf("Word %s in File: %s\n", bst->right->word, bst->next_file->filename);
 
-    search("the", bst, 0); // I
-    search("with", bst, 0);
-    search("beach", bst, 0);
+    search("the", bst, 0, NULL); // I
+    search("with", bst, 0, NULL);
+    search("sea", bst, 0, NULL);
     printf("\ninorder:\n");
     inOrder(bst);
 
-    //readFile_findWords(bst, "a.txt");
+    readFile_findWords(bst, "a.txt");
 
-    search("beach", bst, 1);
+    //search("sea", bst, 1, "c.txt");
     //printf("---%s---", bst->word);
     //deleteFile(bst, "a.txt");
     //deleteNode(bst, "a.txt");
-    //search("sea", bst, 0); // I
-    search("beach", bst, 0);
+    search("the", bst, 0, NULL); // I
+    search("with", bst, 0, NULL);
+    search("sea", bst, 0, NULL);
     printf("\ninorder:\n");
     inOrder(bst);
     //search("with", bst, 0);
@@ -79,20 +80,17 @@ int main(){
 
 
 //searches elements in the tree
-void search(char *string, node* bst, int delete_mode) 
+void search(char *string, node* bst, int delete_mode, char * filename) 
 {
     int res;
     if( bst != NULL ) {
         res = strcmp(string, bst->word);
         if( res < 0)
-            search(string, bst->left, delete_mode);
+            search(string, bst->left, delete_mode, filename);
         else if( res > 0)
-            search(string, bst->right, delete_mode);
+            search(string, bst->right, delete_mode, filename);
         else{
             if(delete_mode == 1){
-                char * filename;
-                printf("\nEnter the file you want to delete: ");
-                scanf("%s", filename);
                 deleteFile(bst, filename);
             }
             else{
@@ -107,7 +105,7 @@ void search(char *string, node* bst, int delete_mode)
                 }
         }
     }
-    else printf("\nNot in the tree.\n");
+    else printf("\n'%s' is not in the tree.\n", string);
 }
 
 
@@ -174,7 +172,7 @@ node *readFile_findWords(node*bst, char *filename){
                     token = strtok(NULL, " ");
                     if(token == NULL)
                         break;
-                    search(token, bst, 1);
+                    search(token, bst, 1, filename);
                 }
             }
         }
@@ -226,15 +224,13 @@ node * insertWord2BST(char *filename, char *string ,node *bst){
 
 node * deleteFile(node *bst, char *filename){
    
-    if( strcmp(bst->files->filename, filename) == 0 && bst->files->next == NULL){ // if the root equals to word we search
-        deleteNode(bst, bst->word);
-        return bst;
-    }
-    else if(strcmp(bst->files->filename, filename) == 0){
+    if( strcmp(bst->files->filename, filename) == 0 ){ // if the root equals to word we search
         list * tmp = bst->files;
         bst->files = bst->files->next;
         free(tmp);
-        return bst;  
+        if(bst->files == NULL)
+            deleteNode(bst, bst->word);
+        return bst; 
     }
     else{
         list * iter = bst->files;
@@ -322,7 +318,7 @@ void delete_tree(node* bst){
     if( bst != NULL ) {
         delete_tree(bst->left);
         delete_tree(bst->right);
-        free(bst->word);         // free the key
+        free(bst->word);         // free
         free(bst);
     }
 }

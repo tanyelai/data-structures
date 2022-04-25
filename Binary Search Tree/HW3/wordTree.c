@@ -51,7 +51,7 @@ int main(){
     printf("\ninorder:\n");
     inOrder(bst);
 
-    readFile_findWords(bst, "a.txt");
+    readFile_findWords(bst, "b.txt");
 
     //search("sea", bst, 1, "c.txt");
     //printf("---%s---", bst->word);
@@ -161,13 +161,14 @@ node *readFile_findWords(node*bst, char *filename){
     else
     {
         while ((read = getline(&line, &len, file)) != -1) {
-            printf("%s", line);
+            printf("\n%s", line);
             line[strlen(line)-2] = '\0'; 
             token = strtok(line, " ");   
             fileName = token;
-            fileName[strlen(filename)] = '\0';
+            fileName[strlen(fileName)-1] = '\0';
+
             printf("--- %s %s ---", fileName, filename);
-            if(strcmp(fileName, filename) == 0){
+            if(!(strcmp(fileName, filename))){
                 while( token != NULL ) {
                     token = strtok(NULL, " ");
                     if(token == NULL)
@@ -223,13 +224,15 @@ node * insertWord2BST(char *filename, char *string ,node *bst){
 
 
 node * deleteFile(node *bst, char *filename){
-   
-    if( strcmp(bst->files->filename, filename) == 0 ){ // if the root equals to word we search
+    if(bst->files->next == NULL){
+        deleteNode(bst, bst->word);
+        return bst;
+    }
+    else if(strcmp(bst->files->filename, filename) == 0 ){ // if the root equals to word we search
         list * tmp = bst->files;
         bst->files = bst->files->next;
         free(tmp);
-        if(bst->files == NULL)
-            deleteNode(bst, bst->word);
+        search(bst->word, bst, 0, NULL);
         return bst; 
     }
     else{

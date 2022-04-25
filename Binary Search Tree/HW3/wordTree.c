@@ -30,8 +30,7 @@ node * deleteFile(node *, char*);
 node * deleteNode(node *, char*);
 void search(char*, node *, int, char*);
 node *readFile_createTree(node*);
-node *readFile_findWords(node*, char *);
-void delete_tree(node* );
+node *readFile_toDelete(node*, char *);
 void inOrder(node *);
 void preOrder(node *);
 void postOrder(node *);
@@ -40,41 +39,77 @@ char *find_min(node *);
 
 int main(){
     node *bst = NULL;
-    bst = readFile_createTree(bst);
-    printf("Tree in-order:\n");
-    //printf("Word %s in File: %s\n", bst->word, bst->next_file->filename);
-    //printf("Word %s in File: %s\n", bst->right->word, bst->next_file->filename);
-
-    search("the", bst, 0, NULL); // I
-    search("with", bst, 0, NULL);
-    search("sea", bst, 0, NULL);
-    printf("\ninorder:\n");
-    inOrder(bst);
-
-    readFile_findWords(bst, "b.txt");
-
-    //search("sea", bst, 1, "c.txt");
-    //printf("---%s---", bst->word);
-    //deleteFile(bst, "a.txt");
-    //deleteNode(bst, "a.txt");
-    search("the", bst, 0, NULL); // I
-    search("with", bst, 0, NULL);
-    search("sea", bst, 0, NULL);
-    printf("\ninorder:\n");
-    inOrder(bst);
-    //search("with", bst, 0);
     
-    
-    //deleteNode(bst, "beach");
-    //printf("\ninorder:\n");
-    //inOrder(bst);
+    int expression;
+    char *word;
+    printf("\n\t\t###   Welcome  ####");
+    int flag = 1;
+    while(flag){
+        
+        printf("\n\
+                1) Initialize/Add New File to the tree. (Please use .txt file to add new file)\n\
+                2) Search for a specific word and see the files that contains that word.\n\
+                3) Delete a file.\n\
+                4) Quit\n\
+                Choice: ");
 
+        scanf("%d", &expression);
 
-    //printf("\npreorder:\n");
-    //preOrder(bst);
+        switch (expression)
+        {
+        case 1:
+            bst = readFile_createTree(bst);
+            printf("\n** Your file is read and new tree is created. Check the words below in different orders. **\n");
+            printf("\nInorder BST:\n");
+            inOrder(bst);
+            printf("\n\nPreorder BST:\n");
+            preOrder(bst);
+            printf("\n\nPostorder BST:\n");
+            postOrder(bst);
+            printf("\n");
 
-    //printf("\npostorder:\n");
-    //postOrder(bst);
+            break;
+        case 2:
+            printf("\nEnter the word that you want to search: ");
+            scanf("%s", word);
+            search(word, bst, 0, NULL);
+
+            break;
+        case 3:
+            printf("\nEnter the name of file that you want to delete: ");
+            scanf("%s", word);
+
+            printf("\n\n###  3 words sample before deletion:  ###\n");
+            search("the", bst, 0, NULL); // I
+            search("with", bst, 0, NULL);
+            search("sea", bst, 0, NULL);
+
+            printf("\n###  Last files for 3 words after deletion:  ###\n");
+            readFile_toDelete(bst, word);
+            
+            printf("\n\n###  The tree after deletion of file:  ###\n");
+            printf("\nInorder BST:\n");
+            inOrder(bst);
+            printf("\n");
+            printf("\nPreorder BST:\n");
+            preOrder(bst);
+            printf("\n");
+            printf("\nPostorder BST:\n");
+            postOrder(bst);
+            printf("\n");
+            
+            printf("\n###  Last files for 3 words after deletion:  ###\n");
+            search("the", bst, 0, NULL); // I
+            search("with", bst, 0, NULL);
+            search("sea", bst, 0, NULL);
+            break;
+        case 4:
+            flag = 0;
+            break;            
+        default:
+            break;
+        }
+    }    
     return 0;
 }
 
@@ -145,7 +180,7 @@ node *readFile_createTree(node*bst){
     return bst;  
 }
 
-node *readFile_findWords(node*bst, char *filename){
+node *readFile_toDelete(node*bst, char *filename){
     FILE *file;
     char in_name[10];
     char *token = NULL;
@@ -166,8 +201,6 @@ node *readFile_findWords(node*bst, char *filename){
             token = strtok(line, " ");   
             fileName = token;
             fileName[strlen(fileName)-1] = '\0';
-
-            printf("--- %s %s ---", fileName, filename);
             if(!(strcmp(fileName, filename))){
                 while( token != NULL ) {
                     token = strtok(NULL, " ");
@@ -196,7 +229,6 @@ node * insertWord2BST(char *filename, char *string ,node *bst){
         bst->files = (list*)malloc(sizeof(list));
         bst->files->filename = malloc(strlen(filename)+1);
         bst->files->filename = strcpy(bst->files->filename, filename);
-        bst->files->next = NULL;
     }
     else{
         res = strcmp(string, bst->word);
@@ -209,13 +241,15 @@ node * insertWord2BST(char *filename, char *string ,node *bst){
             printf("The word '%s' is already exist.\n", string);
 
             list*iter = bst->files;
-            while(iter->next != NULL)
+            while(iter->next != NULL && strcmp(iter->filename, filename) != 0)
                 iter = iter->next;
 
-            iter->next = (list*) malloc(sizeof(list));
-            iter->next->filename = malloc(strlen(filename)+1);
-            iter->next->filename = strcpy(iter->next->filename, filename);
-            iter -> next -> next = NULL;
+            if(strcmp(iter->filename, filename) != 0){
+                iter->next = (list*) malloc(sizeof(list));
+                iter->next->filename = malloc(strlen(filename)+1);
+                iter->next->filename = strcpy(iter->next->filename, filename);
+                iter->next->next = NULL;
+            }
             return bst;
         }
     }
@@ -224,14 +258,17 @@ node * insertWord2BST(char *filename, char *string ,node *bst){
 
 
 node * deleteFile(node *bst, char *filename){
+    
     if(bst->files->next == NULL){
+        printf("\n### Deleted file from '%s' and word removed from tree. ###", bst->word);
         deleteNode(bst, bst->word);
         return bst;
     }
-    else if(strcmp(bst->files->filename, filename) == 0 ){ // if the root equals to word we search
+    else if(strcmp(bst->files->filename, filename) == 0){ // if the root equals to word we search
         list * tmp = bst->files;
         bst->files = bst->files->next;
         free(tmp);
+        printf("\n### Deleted file from '%s':", bst->word);
         search(bst->word, bst, 0, NULL);
         return bst; 
     }
@@ -242,9 +279,10 @@ node * deleteFile(node *bst, char *filename){
 
         list * tmp = iter->next;
         iter->next = iter->next->next;
-        free(tmp);
+        free(tmp); 
         return bst;
     }
+    
 }
 
 node * deleteNode(node * bst, char * word){
@@ -258,11 +296,11 @@ node * deleteNode(node * bst, char * word){
             return NULL;
         }
         else if(bst->right != NULL){ //found element has right child
-            bst->word = find_min(bst->right);
+            bst->word = strcpy(bst->word, find_min(bst->right));
             bst->right = deleteNode(bst->right, find_min(bst->right));
         }
         else{ //found element has left child
-            bst->word = find_max(bst->left);
+            bst->word = strcpy(bst->word, find_min(bst->left));
             bst->left = deleteNode(bst->left, find_max(bst->left));
         }
         return bst;
@@ -315,13 +353,4 @@ void inOrder(node *bst) {
     inOrder(bst->left);
     printf("%s ", bst->word);
     inOrder(bst->right);
-}
-
-void delete_tree(node* bst){
-    if( bst != NULL ) {
-        delete_tree(bst->left);
-        delete_tree(bst->right);
-        free(bst->word);         // free
-        free(bst);
-    }
 }

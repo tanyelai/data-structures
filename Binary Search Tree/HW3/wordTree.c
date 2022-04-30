@@ -227,6 +227,7 @@ node * insertWord2BST(char *filename, char *string ,node *bst){
         bst->files = (list*)malloc(sizeof(list));
         bst->files->filename = malloc(strlen(filename)+1);
         bst->files->filename = strcpy(bst->files->filename, filename);
+        bst->files->next = NULL;
     }
     else{
         res = strcmp(string, bst->word);

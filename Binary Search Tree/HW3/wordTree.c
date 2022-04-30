@@ -79,9 +79,8 @@ int main(){
             printf("\nEnter the name of file that you want to delete: ");
             scanf("%s", word);
 
-            printf("\n\n###  3 words sample before deletion:  ###\n");
-            search("the", bst, 0, NULL); // I
-            search("with", bst, 0, NULL);
+            printf("\n\n###  2 words sample before deletion:  ###\n");
+            search("the", bst, 0, NULL); 
             search("sea", bst, 0, NULL);
 
             printf("\n###  Last files for 3 words after deletion:  ###\n");
@@ -98,9 +97,8 @@ int main(){
             postOrder(bst);
             printf("\n");
             
-            printf("\n###  Last files for 3 words after deletion:  ###\n");
-            search("the", bst, 0, NULL); // I
-            search("with", bst, 0, NULL);
+            printf("\n###  Last files for 2 words after deletion:  ###\n");
+            search("the", bst, 0, NULL); 
             search("sea", bst, 0, NULL);
             break;
         case 4:

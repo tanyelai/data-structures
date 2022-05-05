@@ -2,37 +2,39 @@
 
 #define MAX 30
 
-typedef struct edge {
+struct edge{
   int u, v, w;
-} edge;
+};
+typedef struct edge EDGE;
 
-typedef struct edge_list {
-  edge data[MAX];
+struct e_l{
+  EDGE data[MAX];
   int n;
-} edge_list;
+};
+typedef struct e_l EDGE_LIST;
 
-edge_list elist;
+EDGE_LIST elist;
+EDGE_LIST spanlist;
 
-int Graph[MAX][MAX], n;
-edge_list spanlist;
+int graph[MAX][MAX], n;
 
-void kruskalAlgo();
+void kruskalAlg();
 int find(int belongs[], int vertexno);
 void applyUnion(int belongs[], int c1, int c2);
 void sort();
 void print();
 
-// Applying Krushkal Algo
-void kruskalAlgo() {
+// Applying Kruskal Algorithm
+void kruskalAlg() {
   int belongs[MAX], i, j, cno1, cno2;
   elist.n = 0;
 
-  for (i = 1; i < n; i++)
+  for (i = 0; i < n; i++)
     for (j = 0; j < i; j++) {
-      if (Graph[i][j] != 0) {
+      if (graph[i][j] != 0) {
         elist.data[elist.n].u = i;
         elist.data[elist.n].v = j;
-        elist.data[elist.n].w = Graph[i][j];
+        elist.data[elist.n].w = graph[i][j];
         elist.n++;
       }
     }
@@ -68,15 +70,16 @@ void applyUnion(int belongs[], int c1, int c2) {
       belongs[i] = c1;
 }
 
-// Sorting algo
+// Sorting algorithm
 void sort() {
   int i, j;
-  edge temp;
+  EDGE temp;
 
-  for (i = 1; i < elist.n; i++)
-    for (j = 0; j < elist.n - 1; j++)
-      if (elist.data[j].w > elist.data[j + 1].w) {
-        temp = elist.data[j];
+  //bubble sort 
+  for (i = 1; i < elist.n; i++)  // step
+    for (j = 0; j < elist.n - 1; j++) 
+      if (elist.data[j].w > elist.data[j + 1].w) {  // comparing weigths
+        temp = elist.data[j];   // swapping 
         elist.data[j] = elist.data[j + 1];
         elist.data[j + 1] = temp;
       }
@@ -99,54 +102,54 @@ int main() {
 
   n = 6;
 
-  Graph[0][0] = 0;
-  Graph[0][1] = 4;
-  Graph[0][2] = 4;
-  Graph[0][3] = 0;
-  Graph[0][4] = 0;
-  Graph[0][5] = 0;
-  Graph[0][6] = 0;
+  graph[0][0] = 0;
+  graph[0][1] = 4;
+  graph[0][2] = 4;
+  graph[0][3] = 0;
+  graph[0][4] = 0;
+  graph[0][5] = 0;
+  graph[0][6] = 0;
 
-  Graph[1][0] = 4;
-  Graph[1][1] = 0;
-  Graph[1][2] = 2;
-  Graph[1][3] = 0;
-  Graph[1][4] = 0;
-  Graph[1][5] = 0;
-  Graph[1][6] = 0;
+  graph[1][0] = 4;
+  graph[1][1] = 0;
+  graph[1][2] = 2;
+  graph[1][3] = 0;
+  graph[1][4] = 0;
+  graph[1][5] = 0;
+  graph[1][6] = 0;
 
-  Graph[2][0] = 4;
-  Graph[2][1] = 2;
-  Graph[2][2] = 0;
-  Graph[2][3] = 3;
-  Graph[2][4] = 4;
-  Graph[2][5] = 0;
-  Graph[2][6] = 0;
+  graph[2][0] = 4;
+  graph[2][1] = 2;
+  graph[2][2] = 0;
+  graph[2][3] = 3;
+  graph[2][4] = 4;
+  graph[2][5] = 0;
+  graph[2][6] = 0;
 
-  Graph[3][0] = 0;
-  Graph[3][1] = 0;
-  Graph[3][2] = 3;
-  Graph[3][3] = 0;
-  Graph[3][4] = 3;
-  Graph[3][5] = 0;
-  Graph[3][6] = 0;
+  graph[3][0] = 0;
+  graph[3][1] = 0;
+  graph[3][2] = 3;
+  graph[3][3] = 0;
+  graph[3][4] = 3;
+  graph[3][5] = 0;
+  graph[3][6] = 0;
 
-  Graph[4][0] = 0;
-  Graph[4][1] = 0;
-  Graph[4][2] = 4;
-  Graph[4][3] = 3;
-  Graph[4][4] = 0;
-  Graph[4][5] = 0;
-  Graph[4][6] = 0;
+  graph[4][0] = 0;
+  graph[4][1] = 0;
+  graph[4][2] = 4;
+  graph[4][3] = 3;
+  graph[4][4] = 0;
+  graph[4][5] = 0;
+  graph[4][6] = 0;
 
-  Graph[5][0] = 0;
-  Graph[5][1] = 0;
-  Graph[5][2] = 2;
-  Graph[5][3] = 0;
-  Graph[5][4] = 3;
-  Graph[5][5] = 0;
-  Graph[5][6] = 0;
+  graph[5][0] = 0;
+  graph[5][1] = 0;
+  graph[5][2] = 2;
+  graph[5][3] = 0;
+  graph[5][4] = 3;
+  graph[5][5] = 0;
+  graph[5][6] = 0;
 
-  kruskalAlgo();
+  kruskalAlg();
   print();
 }

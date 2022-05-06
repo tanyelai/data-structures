@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// ****************************************************************
+// TASK: ADDING NEW EDGE TO THE MST AND UPDATE IT IF NECESSARY
+// ****************************************************************
+
 #define MAX 30
 
 struct edge{
@@ -34,7 +38,7 @@ int main() {
   
   elist.n=0;
   while(!feof(fp)){
-    fscanf(fp, "%d %d %d", &elist.data[elist.n].u, &elist.data[elist.n].v, &elist.data[elist.n].w);
+    fscanf(fp, "%d %d %d", &elist.data[elist.n].w, &elist.data[elist.n].u, &elist.data[elist.n].v);
     elist.n++;
   }
   kruskalAlg();
@@ -56,29 +60,13 @@ void kruskalAlg() {
     cno1 = find(belongs, elist.data[i].u);
     cno2 = find(belongs, elist.data[i].v);
 
-    printf("\ndöngü %d", i);
-    printf("\ncno1: %d - cno2: %d\n", cno1, cno2);
-
     if (cno1 != cno2) {
       spanlist.data[spanlist.n] = elist.data[i];
       spanlist.n++;
       applyUnion(belongs, cno1, cno2);
     }
-
-      
-  printf("\nBELONG %d\n", i);
-  for(j=0; j<elist.n; j++){
-    printf("bel%d: %d\n",j, belongs[j]);
-  }
-
-  }
-
-  printf("LAST BELONGS:\n");
-  for(i=0; i<elist.n; i++){
-    printf("bel%d: %d\n",i, belongs[i]);
   }
 }
-
 
 // https://web.stanford.edu/class/archive/cs/cs161/cs161.1168/lecture15.pdf
 // https://courses.cs.duke.edu/cps100e/fall09/notes/UnionFind.pdf
@@ -107,7 +95,6 @@ void sort() {
         elist.data[j] = elist.data[j + 1];
         elist.data[j + 1] = temp;
       }
-
 }
 
 void update_edges(int x){
@@ -117,27 +104,28 @@ void update_edges(int x){
 }
 
 void add_new_edge(){
-  printf("\n\tADDING NEW EDGE\n\tEnter the source, destination point and weight. Leave a space in between: ");
-  scanf("%d %d %d", &elist.data[elist.n].u, &elist.data[elist.n].v, &elist.data[elist.n].w);
+  printf("\n\tADDING NEW EDGE\n\tEnter the weight, u and v. Leave a space in between: ");
+  scanf("%d %d %d", &elist.data[elist.n].w, &elist.data[elist.n].u, &elist.data[elist.n].v);
   sort();
   int i, j;
 
-  for(i=0; i<spanlist.n; i++){
-    if(elist.data[elist.n].u == spanlist.data[i].v){
+  // The conditions for understanding the place that new edge creates cycle and being less than max weight of the cycle.
+  for(i=0; i<spanlist.n; i++){ 
+    if(elist.data[elist.n].u == spanlist.data[i].v){ // case 1 -> dest-src
       for(j=0; j<spanlist.n; j++){
         if(spanlist.data[i].u == spanlist.data[j].u && elist.data[elist.n].v == spanlist.data[j].v && elist.data[elist.n].w < spanlist.data[j].w){
           update_edges(j);
         }
       }
     }
-    else if(elist.data[elist.n].v == spanlist.data[i].u){  
+    else if(elist.data[elist.n].v == spanlist.data[i].u){   // case 2 -> src-dest
       for(j=0; j<spanlist.n; j++){
         if(spanlist.data[i].v == spanlist.data[j].v && elist.data[elist.n].u == spanlist.data[j].u && elist.data[elist.n].w < spanlist.data[j].w){
           update_edges(j);
       }
     }
   }
-    else if(elist.data[elist.n].u == spanlist.data[i].u){
+    else if(elist.data[elist.n].u == spanlist.data[i].u){ // case 3 -> both source
       for(j=0; j<spanlist.n; j++){
         if(spanlist.data[i].v == spanlist.data[j].u && elist.data[elist.n].v == spanlist.data[j].v &&elist.data[elist.n].w < spanlist.data[j].w){
           update_edges(j);
@@ -150,11 +138,10 @@ void add_new_edge(){
 }
 
 
-
 // Printing the result
 void print() {
   int i, cost = 0;
-
+  printf("\nU - V : Weight");
   for (i = 0; i < spanlist.n; i++) {
     printf("\n%d - %d : %d", spanlist.data[i].u, spanlist.data[i].v, spanlist.data[i].w);
     cost = cost + spanlist.data[i].w;

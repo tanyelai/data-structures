@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #define MAX 30
 
@@ -7,16 +8,14 @@ struct edge{
 };
 typedef struct edge EDGE;
 
-struct e_l{
+struct edge_list{
   EDGE data[MAX];
   int n;
 };
-typedef struct e_l EDGE_LIST;
+typedef struct edge_list EDGE_LIST;
 
 EDGE_LIST elist;
 EDGE_LIST spanlist;
-
-int graph[MAX][MAX], n;
 
 void kruskalAlg();
 int find(int belongs[], int vertexno);
@@ -27,21 +26,9 @@ void print();
 // Applying Kruskal Algorithm
 void kruskalAlg() {
   int belongs[MAX], i, j, cno1, cno2;
-  elist.n = 0;
-
-  for (i = 0; i < n; i++)
-    for (j = 0; j < i; j++) {
-      if (graph[i][j] != 0) {
-        elist.data[elist.n].u = i;
-        elist.data[elist.n].v = j;
-        elist.data[elist.n].w = graph[i][j];
-        elist.n++;
-      }
-    }
-
   sort();
 
-  for (i = 0; i < n; i++)
+  for (i = 0; i < elist.n; i++)
     belongs[i] = i;
 
   spanlist.n = 0;
@@ -52,20 +39,24 @@ void kruskalAlg() {
 
     if (cno1 != cno2) {
       spanlist.data[spanlist.n] = elist.data[i];
-      spanlist.n = spanlist.n + 1;
+      spanlist.n++;
       applyUnion(belongs, cno1, cno2);
     }
   }
+
 }
 
+
+// https://web.stanford.edu/class/archive/cs/cs161/cs161.1168/lecture15.pdf
+// https://courses.cs.duke.edu/cps100e/fall09/notes/UnionFind.pdf
 int find(int belongs[], int vertexno) {
   return (belongs[vertexno]);
 }
 
-void applyUnion(int belongs[], int c1, int c2) {
+void applyUnion(int belongs[],  int c1, int c2) {
   int i;
 
-  for (i = 0; i < n; i++)
+  for (i = 0; i < elist.n; i++)
     if (belongs[i] == c2)
       belongs[i] = c1;
 }
@@ -83,6 +74,7 @@ void sort() {
         elist.data[j] = elist.data[j + 1];
         elist.data[j + 1] = temp;
       }
+
 }
 
 // Printing the result
@@ -100,55 +92,14 @@ void print() {
 int main() {
   int i, j, total_cost;
 
-  n = 6;
-
-  graph[0][0] = 0;
-  graph[0][1] = 4;
-  graph[0][2] = 4;
-  graph[0][3] = 0;
-  graph[0][4] = 0;
-  graph[0][5] = 0;
-  graph[0][6] = 0;
-
-  graph[1][0] = 4;
-  graph[1][1] = 0;
-  graph[1][2] = 2;
-  graph[1][3] = 0;
-  graph[1][4] = 0;
-  graph[1][5] = 0;
-  graph[1][6] = 0;
-
-  graph[2][0] = 4;
-  graph[2][1] = 2;
-  graph[2][2] = 0;
-  graph[2][3] = 3;
-  graph[2][4] = 4;
-  graph[2][5] = 0;
-  graph[2][6] = 0;
-
-  graph[3][0] = 0;
-  graph[3][1] = 0;
-  graph[3][2] = 3;
-  graph[3][3] = 0;
-  graph[3][4] = 3;
-  graph[3][5] = 0;
-  graph[3][6] = 0;
-
-  graph[4][0] = 0;
-  graph[4][1] = 0;
-  graph[4][2] = 4;
-  graph[4][3] = 3;
-  graph[4][4] = 0;
-  graph[4][5] = 0;
-  graph[4][6] = 0;
-
-  graph[5][0] = 0;
-  graph[5][1] = 0;
-  graph[5][2] = 2;
-  graph[5][3] = 0;
-  graph[5][4] = 3;
-  graph[5][5] = 0;
-  graph[5][6] = 0;
+  FILE *fp = fopen("test.txt", "r");
+  fscanf(fp, "%d", &elist.n);
+  
+  elist.n=0;
+  while(!feof(fp)){
+    fscanf(fp, "%d %d %d", &elist.data[elist.n].u, &elist.data[elist.n].v, &elist.data[elist.n].w);
+    elist.n++;
+  }
 
   kruskalAlg();
   print();

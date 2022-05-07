@@ -10,7 +10,7 @@ _____
 | Queues | [Simple](https://github.com/Toygarr/data-structures/blob/main/Queue/simple_queue.c), [Circular](https://github.com/Toygarr/data-structures/blob/main/Queue/circular_queue.c) | |
 | Binary Search Trees | [BST](https://github.com/Toygarr/data-structures/blob/main/Binary%20Search%20Tree/bst.c)| [Creating BST from words in files](https://github.com/Toygarr/data-structures/tree/main/Binary%20Search%20Tree/HW3)| 
 | Heap Trees and Heap Sort | [Heap Tree & Heap Sort](https://github.com/Toygarr/data-structures/blob/main/Heap%20Tree/heap.c) | |
-| Graphs and Min Spanning Tree | | |
+| Graphs and Min Spanning Tree | Adjacency [List](https://github.com/Toygarr/data-structures/blob/main/Graph/AdjecancyList.c) - [Matrix](https://github.com/Toygarr/data-structures/blob/main/Graph/AdjecancyMatrix.c), [Prim's Algorithm](https://github.com/Toygarr/data-structures/blob/main/Graph/Greedy%20Algorithms/PrimsAlgorithm.c) | [Kruskal's Alg. & Adding New Edge to the MST](https://github.com/Toygarr/data-structures/blob/main/Graph/Greedy%20Algorithms/HW4/KruskalsAlgorithm.c)|
 | Search Algorithms | | |
 
 We can use arrays, linked lists and heap trees to implement ```priority queue``` so it has no special implementation. For example, heap tree is available to use directly as a priority queue. In max-heap trees, we are aware of the first element of tree is the biggest. We can simply use that algorithm to realize priority queue efficiently.

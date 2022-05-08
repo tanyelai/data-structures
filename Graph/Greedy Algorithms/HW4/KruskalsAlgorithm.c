@@ -1,10 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// ****************************************************************
-// TASK: ADDING NEW EDGE TO THE MST AND UPDATE IT IF NECESSARY
-// ****************************************************************
-
 #define MAX 30
 
 struct edge{
@@ -29,12 +25,10 @@ void print();
 void update_edges();
 void add_new_edge();
 
-
 int main() {
   int i, j, total_cost;
 
-  FILE *fp = fopen("test.txt", "r");
-  fscanf(fp, "%d", &elist.n);
+  FILE *fp = fopen("Sample_MST.txt", "r");
   
   elist.n=0;
   while(!feof(fp)){
@@ -49,7 +43,7 @@ int main() {
 // Applying Kruskal Algorithm
 void kruskalAlg() {
   int belongs[MAX], i, j, cno1, cno2;
-  sort();
+  sort(0);
 
   for (i = 0; i < elist.n; i++)
     belongs[i] = i;
@@ -82,11 +76,12 @@ void applyUnion(int belongs[],  int c1, int c2) {
       belongs[i] = c1;
 }
 
-// Sorting algorithm
-void sort() {
+// Sorting algorithm with kruskal and add new edge modes
+void sort(int flag) {
   int i, j;
   EDGE temp;
 
+  if(flag==0){
   //bubble sort 
   for (i = 1; i < elist.n; i++)  // step
     for (j = 0; j < elist.n - 1; j++) 
@@ -95,6 +90,17 @@ void sort() {
         elist.data[j] = elist.data[j + 1];
         elist.data[j + 1] = temp;
       }
+  }
+  else{
+      //bubble sort 
+    for (i = 1; i < spanlist.n; i++)  // step
+      for (j = 0; j < spanlist.n - 1; j++) 
+        if (spanlist.data[j].u > spanlist.data[j + 1].u) {  // comparing weigths
+          temp = spanlist.data[j];   // swapping 
+          spanlist.data[j] = spanlist.data[j + 1];
+          spanlist.data[j + 1] = temp;
+        }
+  }
 }
 
 void update_edges(int x){
@@ -106,15 +112,17 @@ void update_edges(int x){
 void add_new_edge(){
   printf("\n\tADDING NEW EDGE\n\tEnter the weight, u and v. Leave a space in between: ");
   scanf("%d %d %d", &elist.data[elist.n].w, &elist.data[elist.n].u, &elist.data[elist.n].v);
-  sort();
-  int i, j;
+  int i=0, j, found = 0;
+  
 
-  // The conditions for understanding the place that new edge creates cycle and being less than max weight of the cycle.
-  for(i=0; i<spanlist.n; i++){ 
+  // The conditions for understanding the place that new edge creates cycle and being less than max weight of the cycle of triangle.
+  while(found == 0 && i<spanlist.n){ 
     if(elist.data[elist.n].u == spanlist.data[i].v){ // case 1 -> dest-src
       for(j=0; j<spanlist.n; j++){
         if(spanlist.data[i].u == spanlist.data[j].u && elist.data[elist.n].v == spanlist.data[j].v && elist.data[elist.n].w < spanlist.data[j].w){
           update_edges(j);
+          sort(1);
+          found=1;
         }
       }
     }
@@ -122,6 +130,8 @@ void add_new_edge(){
       for(j=0; j<spanlist.n; j++){
         if(spanlist.data[i].v == spanlist.data[j].v && elist.data[elist.n].u == spanlist.data[j].u && elist.data[elist.n].w < spanlist.data[j].w){
           update_edges(j);
+          sort(1);
+          found=1;
       }
     }
   }
@@ -129,9 +139,12 @@ void add_new_edge(){
       for(j=0; j<spanlist.n; j++){
         if(spanlist.data[i].v == spanlist.data[j].u && elist.data[elist.n].v == spanlist.data[j].v &&elist.data[elist.n].w < spanlist.data[j].w){
           update_edges(j);
+          sort(1);
+          found=1;
         }
       }
     }
+    i++;
   }
   printf("\nNEW MST AFTER ADDING EDGE");
   print();

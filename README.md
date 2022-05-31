@@ -15,4 +15,4 @@ _____
 
 We can use arrays, linked lists and heap trees to implement ```priority queue``` so it has no special implementation. For example, heap tree is available to use directly as a priority queue. In max-heap trees, we are aware of the first element of tree is the biggest. We can simply use that algorithm to realize priority queue efficiently.
 
-**Important:** The homework codes may have little bugs in extreme cases due to c language problems with files and short homework deadlines. Feel free to correct me if you find proper solution for those cases. 
+**Important:** Please note that there may some mistakes and incomplete codes. Some homeworks may have few bugs in extreme cases due to C language problems with files and short homework deadlines. Feel free to correct me if you find proper solution for those cases. 

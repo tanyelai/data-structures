@@ -1,1 +1,1 @@
-**Important:** Please note that there may some mistakes and incomplete codes. Some homeworks may have few bugs in extreme cases due to short homework deadlines. Feel free to correct me if you find proper solution for those cases. Still there may cool useful stuff.
+**Important:** Please note that there may some mistakes and incomplete codes. Some homeworks may have few bugs in extreme cases due to short homework deadlines. Feel free to correct me if you find proper solution for those cases. Still you can find many cool useful stuff in the codes.

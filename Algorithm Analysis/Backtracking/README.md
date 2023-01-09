@@ -7,7 +7,7 @@ sari mavi kirmizi yesil<br/>
 yesil sari kirmizi mavi<br/>
 
 5<br/>
-kirmizi mavi yesil mor turkuaz<br/>  
+kirmizi mavi yesil mor turkuaz<br/>
 kirmizi mavi yesil mor turkuaz<br/>
 kirmizi mavi yesil mor turkuaz<br/>
 kirmizi mavi yesil mor turkuaz<br/>

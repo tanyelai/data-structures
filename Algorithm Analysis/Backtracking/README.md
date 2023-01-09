@@ -1,37 +1,37 @@
 Example Test Cases:
 
-4
-sari yesil kirmizi mavi
-yesil mavi kirmizi sari
-sari mavi kirmizi yesil
-yesil sari kirmizi mavi
+4<br/>
+sari yesil kirmizi mavi<br/>
+yesil mavi kirmizi sari<br/>
+sari mavi kirmizi yesil<br/>
+yesil sari kirmizi mavi<br/>
 
 5
-kirmizi mavi yesil mor turkuaz    
-kirmizi mavi yesil mor turkuaz
-kirmizi mavi yesil mor turkuaz
-kirmizi mavi yesil mor turkuaz
-kirmizi mavi yesil mor turkuaz
+kirmizi mavi yesil mor turkuaz<br/>  
+kirmizi mavi yesil mor turkuaz<br/>
+kirmizi mavi yesil mor turkuaz<br/>
+kirmizi mavi yesil mor turkuaz<br/>
+kirmizi mavi yesil mor turkuaz<br/>
 
 5
-kirmizi mavi yesil mor turkuaz
-turkuaz kirmizi mavi yesil mor
-kirmizi mavi yesil mor turkuaz
-mor turkuaz kirmizi mavi yesil 
-mavi yesil mor turkuaz kirmizi
+kirmizi mavi yesil mor turkuaz<br/>
+turkuaz kirmizi mavi yesil mor<br/>
+kirmizi mavi yesil mor turkuaz<br/>
+mor turkuaz kirmizi mavi yesil<br/>
+mavi yesil mor turkuaz kirmizi<br/>
 
 4
-kirmizi mavi yesil mor
-kirmizi mavi yesil mor
-mor kirmizi mavi yesil
-mor kirmizi mavi yesil
+kirmizi mavi yesil mor<br/>
+kirmizi mavi yesil mor<br/>
+mor kirmizi mavi yesil<br/>
+mor kirmizi mavi yesil<br/>
 
 3
-mavi yesil kirmizi     
-kirmizi mavi yesil
-kirmizi mavi yesil
+mavi yesil kirmizi<br/>   
+kirmizi mavi yesil<br/>
+kirmizi mavi yesil<br/>
 
 3
-mavi yesil kirmizi     
-kirmizi yesil mavi
-kirmizi mavi yesil
+mavi yesil kirmizi<br/>   
+kirmizi yesil mavi<br/>
+kirmizi mavi yesil<br/>

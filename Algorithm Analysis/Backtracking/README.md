@@ -27,11 +27,11 @@ mor kirmizi mavi yesil<br/>
 mor kirmizi mavi yesil<br/>
 
 3<br/>
-mavi yesil kirmizi<br/>   
+mavi yesil kirmizi<br/>
 kirmizi mavi yesil<br/>
 kirmizi mavi yesil<br/>
 
 3<br/>
-mavi yesil kirmizi<br/>   
+mavi yesil kirmizi<br/>
 kirmizi yesil mavi<br/>
 kirmizi mavi yesil<br/>
